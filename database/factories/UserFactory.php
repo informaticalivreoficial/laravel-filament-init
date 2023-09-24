@@ -21,6 +21,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'avatar' => 'https://i.pravatar.cc/150?img=' . fake()->numberBetween(1, 70),
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -30,6 +31,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+            'status' => fake()->boolean(),
         ];
     }
 

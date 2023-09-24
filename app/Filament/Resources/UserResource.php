@@ -31,9 +31,10 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
+                Tables\Columns\ImageColumn::make('avatar')->circular()->label('Foto'),
+                Tables\Columns\TextColumn::make('name')->searchable()->sortable()->label('Nome'),
                 Tables\Columns\TextColumn::make('email')->searchable()->sortable(),
-                Tables\Columns\ToggleColumn::make('status')->label('Edit Active'),
+                Tables\Columns\ToggleColumn::make('status')->label('Status'),
             ])
             ->filters([
                 //
