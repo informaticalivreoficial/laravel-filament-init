@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-use App\Support\Cropper;
-use App\Models\Estados;
-use App\Models\Cidades;
 use App\Models\Template;
 use Carbon\Carbon;
 
@@ -19,9 +16,7 @@ class ConfigController extends Controller
 {
     public function editar()
     {
-        $config = Configuracoes::where('id', '1')->first();
-        $estados = Estados::orderBy('estado_nome', 'ASC')->get();
-        $cidades = Cidades::orderBy('cidade_nome', 'ASC')->get();
+        $config = Configuracoes::where('id', '1')->first();        
 
         $templates = Template::orderBy('created_at', 'DESC')
                 ->available()
@@ -37,18 +32,10 @@ class ConfigController extends Controller
 
         return view('admin.configuracoes',[
             'config' => $config,
-            'estados' => $estados,
-            'cidades' => $cidades,
             'diferenca' => $diferenca,
             'templates' => $templates,
             'feeddatadiferenca' => $feeddatadiferenca
         ]);
-    }
-
-    public function fetchCity(Request $request)
-    {
-        $data['cidades'] = Cidades::where("estado_id",$request->estado_id)->get(["cidade_nome", "cidade_id"]);
-        return response()->json($data);
     }
 
     public function update(ConfiguracoesRequest $request, $id)

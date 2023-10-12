@@ -58,8 +58,6 @@ class Configuracoes extends Model
         'linkedin',
         'vimeo',
         'fliccr',
-        'soundclound',
-        'snapchat',
         //Seo
         'descricao',
         'mapa_google',
