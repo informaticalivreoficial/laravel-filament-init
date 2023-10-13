@@ -17,13 +17,10 @@ use App\Models\{
     Estados,
     Galeria,
     Newsletter,
-    Parceiro,
     Slide,
     User
 };
-use App\Services\CidadeService;
 use App\Services\ConfigService;
-use App\Services\EstadoService;
 use App\Support\Seo;
 use Carbon\Carbon;
 
@@ -32,19 +29,10 @@ class WebController extends Controller
     protected $configService, $estadoService, $cidadeService;
     protected $seo;
 
-    public function __construct(
-        ConfigService $configService, 
-        EstadoService $estadoService)
+    public function __construct(ConfigService $configService)
     {
         $this->configService = $configService;
-        $this->estadoService = $estadoService;
         $this->seo = new Seo();        
-    }
-
-    public function fetchCity(Request $request)
-    {
-        $data['cidades'] = Cidades::where("estado_id",$request->estado_id)->get(["cidade_nome", "cidade_id"]);
-        return response()->json($data);
     }
 
     public function home()

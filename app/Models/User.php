@@ -21,7 +21,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'tenant_id',
         'email',
         'email1',
         'password',
@@ -35,9 +34,6 @@ class User extends Authenticatable
         'naturalidade',
         'estado_civil',
         'avatar',
-        'profissao',
-        'renda',
-        'profissao_empresa',
         //Endereço
         'cep', 'rua', 'num', 'complemento', 'bairro', 'uf', 'cidade',
         //Contato
@@ -45,17 +41,6 @@ class User extends Authenticatable
         //Redes
         'facebook', 'twitter', 'instagram', 'linkedin', 'vimeo',
         'youtube', 'fliccr', 
-        'tipo_de_comunhao',
-        'nome_conjuje',
-        'genero_conjuje',
-        'cpf_conjuje',
-        'rg_conjuje',
-        'rg_expedicao_conjuje',
-        'nasc_conjuje',
-        'naturalidade_conjuje',
-        'profissao_conjuje',
-        'renda_conjuje',
-        'profissao_empresa_conjuje',
         'admin',
         'client',
         'editor',
@@ -294,56 +279,6 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     } 
 
-    public function setCpfconjujeAttribute($value)
-    {
-        $this->attributes['cpf_conjuje'] = (!empty($value) ? $this->clearField($value) : null);
-    }
-    
-    public function getCpfconjujeAttribute($value)
-    {
-        if (empty($value)) {
-            return null;
-        }
-
-        return
-            substr($value, 0, 3) . '.' .
-            substr($value, 3, 3) . '.' .
-            substr($value, 6, 3) . '-' .
-            substr($value, 9, 2);
-    }
-    
-    public function setRgconjujeAttribute($value)
-    {
-        $this->attributes['rg_conjuje'] = (!empty($value) ? $this->clearField($value) : null);
-    }
-    
-    public function getRgconjujeAttribute($value)
-    {
-        if (empty($value)) {
-            return null;
-        }
-
-        return
-            substr($value, 0, 2) . '.' .
-            substr($value, 2, 3) . '.' .
-            substr($value, 5, 3) . '-' .
-            substr($value, 8, 1);
-    }
-    
-    public function setNascconjujeAttribute($value)
-    {
-        $this->attributes['nasc_conjuje'] = (!empty($value) ? $this->convertStringToDate($value) : null);
-    }
-    
-    public function getNascconjujeAttribute($value)
-    {
-        if (empty($value)) {
-            return null;
-        }
-
-        return date('d/m/Y', strtotime($value));
-    }
-
     public function setAdminAttribute($value)
     {
         $this->attributes['admin'] = ($value === true || $value === 'on' ? 1 : 0);
@@ -372,17 +307,7 @@ class User extends Authenticatable
         }
         $this->attributes['remember_token'] = bcrypt($value);
     }
-
-    public function setRendaAttribute($value)
-    {
-        $this->attributes['renda'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
-    }
-
-    public function setRendaConjujeAttribute($value)
-    {
-        $this->attributes['renda_conjuje'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
-    }
-
+    
     public function getCreatedAtAttribute($value)
     {
         if (empty($value)) {
@@ -390,15 +315,6 @@ class User extends Authenticatable
         }
 
         return date('d/m/Y', strtotime($value));
-    }
-
-    public function getRendaAttribute($value)
-    {
-        if (empty($value)) {
-            return null;
-        }
-
-        return number_format($value, 2, ',', '.');
     }
 
     private function convertStringToDouble(?string $param)

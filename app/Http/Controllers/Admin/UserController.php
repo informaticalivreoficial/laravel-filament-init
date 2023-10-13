@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\User as UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\Cidades;
-use App\Models\Estados;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -47,22 +45,10 @@ class UserController extends Controller
         $user->save();
         return response()->json(['success' => true]);
     }
-
-    public function fetchCity(Request $request)
-    {
-        $data['cidades'] = Cidades::where("estado_id",$request->estado_id)->get(["cidade_nome", "cidade_id"]);
-        return response()->json($data);
-    } 
     
     public function create()
     {
-        $estados = Estados::orderBy('estado_nome', 'ASC')->get();
-        $cidades = Cidades::orderBy('cidade_nome', 'ASC')->get();        
-
-        return view('admin.users.create',[
-            'estados' => $estados,
-            'cidades' => $cidades
-        ]);
+        return view('admin.users.create');
     }
     
     public function store(UserRequest $request)
@@ -82,14 +68,10 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::where('id', $id)->first();    
-        $estados = Estados::orderBy('estado_nome', 'ASC')->get();
-        $cidades = Cidades::orderBy('cidade_nome', 'ASC')->get(); 
+        $user = User::where('id', $id)->first(); 
         
         return view('admin.users.edit', [
-            'user' => $user,
-            'estados' => $estados,
-            'cidades' => $cidades
+            'user' => $user
         ]);
     }
 
@@ -102,22 +84,10 @@ class UserController extends Controller
         $user->setClientAttribute($request->client);
         $user->setSuperAdminAttribute($request->superadmin);
 
-        $nasc = Carbon::createFromFormat('d/m/Y', $request->nasc)->format('d-m-Y');        
-        
-        if(Carbon::parse($nasc)->age < 18){
-            return redirect()->back()->with(['color' => 'danger', 'message' => 'Data de nascimento inválida!']);
-        }
-
-        if($request->estado_civil == 'casado'){
-            $nasc_conjuje = Carbon::createFromFormat('d/m/Y', $request->nasc_conjuje)->format('d-m-Y');
-            if(Carbon::parse($nasc_conjuje)->age < 18){
-                return redirect()->back()->with(['color' => 'danger', 'message' => 'Data de nascimento do conjuje inválida!']);
-            }            
-        }
+        $nasc = Carbon::createFromFormat('d/m/Y', $request->nasc)->format('d-m-Y');  
 
         if(!empty($request->file('avatar'))){
             Storage::delete($user->avatar);
-            //Cropper::flush($user->avatar);
             $user->avatar = '';
         }
 
@@ -188,7 +158,6 @@ class UserController extends Controller
                       ($user->admin == '1' && $user->client == '0' ? 'Administrador' :
                       ($user->admin == '0' && $user->client == '1' ? 'Cliente' : 'Cliente')));
             Storage::delete($user->avatar);
-            //Cropper::flush($user->avatar);
             $user->delete();
         }
         if($user->admin == '1' || $user->Editor == '1'){

@@ -20,15 +20,14 @@
 
 	<!-- CSS here -->
 	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/bootstrap.min.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/animate.min.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/magnific-popup.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/fontawesome/css/all.min.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/dripicons.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/slick.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/meanmenu.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/default.css')}}">
+	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/font-awesome.min.css')}}">
+	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/shortcode/shortcodes.css')}}">
 	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/style.css')}}">
 	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/responsive.css')}}">
+	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/renato.css')}}">
+	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/bootstrap-datepicker3.min.css')}}">
+	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials.css')}}">
+	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials-theme-flat.css')}}">
 		
     <link rel="shortcut icon" type="image/x-icon" href="{{$configuracoes->getfaveicon()}}" sizes="32x32" />
     
@@ -134,160 +133,158 @@
 		@yield('content')
 	</main>
 
-	<footer class="footer-bg footer-p">
-		<div class="footer-top  pt-90 pb-40" style="background-color: #644222; background-image: url({{url('frontend/'.$configuracoes->template.'/assets/images/footer-bg.png')}});">
+	<footer class="footer-area">
+		<!-- Footer Widget Start -->
+		<div class="footer-widget-area bg-dark">
 			<div class="container">
-				<div class="row justify-content-between">
-					<div class="col-xl-4 col-lg-4 col-sm-6">
-						<div class="footer-widget mb-30">
-							<div class="f-widget-title mb-30">
-								<img src="{{$configuracoes->getLogomarca()}}" alt="{{$configuracoes->nomedosite}}">
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+						<div class="single-footer-widget" style="width: 90%;">
+							<div class="footer-logo">
+								<a href="{{route('web.home')}}">
+									<img src="{{$configuracoes->getLogomarca()}}" alt="{{$configuracoes->nomedosite}}"/>
+								</a>
 							</div>
-							<div class="f-contact">
-								<ul>
-									@if($configuracoes->telefone1)
-										<li>
-											<i class="icon fal fa-phone"></i>
-											<span>{{$configuracoes->telefone1}}
-											@if ($configuracoes->telefone2)
-												<br>{{$configuracoes->telefone2}}
-											@endif
-											@if ($configuracoes->telefone3)
-												<br>{{$configuracoes->telefone3}}
-											@endif
-											</span>
-										</li>
-									@endif										
-									@if($configuracoes->whatsapp)
-										<li>
-											<i class="icon fab fa-whatsapp"></i>
-											<span>{{$configuracoes->whatsapp}}</span>
-										</li>
-									@endif										
-									@if($configuracoes->email)
-										<li><i class="icon fal fa-envelope"></i>
-											<span>
-												<a href="mailto:{{$configuracoes->email}}">{{$configuracoes->email}}</a>
-												@if ($configuracoes->email1)
-												<br>
-												<a href="mailto:{{$configuracoes->email1}}">{{$configuracoes->email1}}</a>
-												@endif												
-											</span>
-										</li>
-									@endif 
-									@if($configuracoes->rua)
-										<li>
-											<i class="icon fal fa-map-marker-check"></i>
-											<span>{{$configuracoes->rua}}
-												@if($configuracoes->num)
-													, {{$configuracoes->num}}
-												@endif	
-												@if($configuracoes->bairro)
-													<br>{{$configuracoes->bairro}}
-												@endif
-												@if($configuracoes->cidade)  
-													- {{\App\Helpers\Cidade::getCidadeNome($configuracoes->cidade, 'cidades')}}
-												@endif
-											</span>
-										</li>
-									@endif
-								</ul>								   
+							{!!$configuracoes->descricao!!}
+							<div class="social-icons">
+								@if ($configuracoes->facebook)
+									<a target="_blank" href="{{$configuracoes->facebook}}" title="Facebook"><i class="zmdi zmdi-facebook"></i></a>
+								@endif
+								@if ($configuracoes->instagram)
+									<a target="_blank" href="{{$configuracoes->instagram}}" title="Instagram"><i class="zmdi zmdi-instagram"></i></a>
+								@endif
+								@if ($configuracoes->twitter)
+									<a target="_blank" href="{{$configuracoes->twitter}}" title="Twitter"><i class="zmdi zmdi-twitter"></i></a>
+								@endif
+								@if ($configuracoes->youtube)
+									<a target="_blank" href="{{$configuracoes->youtube}}" title="Youtube"><i class="zmdi zmdi-youtube"></i></a>
+								@endif
+								@if ($configuracoes->linkedin)
+									<a target="_blank" href="{{$configuracoes->linkedin}}" title="Linkedin"><i class="zmdi zmdi-linkedin"></i></a>
+								@endif								
 							</div>
 						</div>
-					</div>					   
-					<div class="col-xl-4 col-lg-4 col-sm-6">
-						<div class="footer-widget mb-30">
-							<div class="f-widget-title">
-								<h2>Links</h2>
-							</div>
-							<div class="footer-link">
-								<ul>
-									<li><a href="{{route('web.acomodacoes')}}" title="Acomodações">Acomodações</a></li>
-									<li><a href="{{route('web.galerias')}}" title="Galerias">Galerias</a></li>
-									<li><a href="{{route('web.blog.artigos')}}" title="Blog">Blog</a></li>
-									<li><a href="{{route('web.reservar')}}" title="Pré-Reserva">Pré-Reserva</a></li>  
-									<li><a href="{{route('web.atendimento')}}" title="Atendimento">Atendimento</a></li>                          
-									<li><a href="{{route('web.politica')}}" title="Política de Privacidade">Política de Privacidade</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>  
-					<div class="col-xl-4 col-lg-4 col-sm-12">
-						@if (!empty($newsletterForm))
-							<div class="footer-widget mb-30">
-								<div class="f-widget-title">
-									<h2>Receba Promoções</h2>
-								</div>
-								<div class="footer-link">
-									<div class="subricbe p-relative" data-animation="fadeInDown" data-delay=".4s" >
-										<form action="" method="post" class="contact-form j_submitnewsletter">
-											@csrf
-											<div id="js-newsletter-result"></div>
-												<div class="form_hide">
-												<!-- HONEYPOT -->
-												<input type="hidden" class="noclear" name="bairro" value="" />
-												<input type="text" class="noclear" style="display: none;" name="cidade" value="" />
-												<input type="hidden" class="noclear" name="status" value="1" />
-												<input type="hidden" class="noclear" name="nome" value="#Cadastrado pelo Site" />
-												<input type="text" id="email2" name="email"  class="header-input" placeholder="Cadastre seu E-mail">
-												<button class="btn header-btn" id="js-subscribe-btn"> <i class="fas fa-location-arrow"></i> </button>
-											</div>
-										</form>
-									</div>
-								</div>							   
-							</div>
-						@endif
-					</div>					  
-				</div>
-			</div>
-		</div>
-		<div class="copyright-wrap">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-8 col-md-8">                         
-						&copy; {{date('Y')}} {{$configuracoes->nomedosite}} . Todos os direitos reservados. <span class="small text-silver-dark">Feito com <i style="color:red;" class="fa fa-heart"></i> por <a style="color:#fff;" target="_blank" href="{{env('DESENVOLVEDOR_URL')}}">{{env('DESENVOLVEDOR')}}</a></span>         
 					</div>
-					<div class="col-lg-4 col-md-4 text-right text-xl-right">                       
-						<div class="footer-social">                                    
-							@if ($configuracoes->facebook)
-								<a target="_blank" href="{{$configuracoes->facebook}}" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-							@endif
-							@if ($configuracoes->instagram)
-								<a target="_blank" href="{{$configuracoes->instagram}}" title="Instagram"><i class="fab fa-instagram"></i></a>
-							@endif
-							@if ($configuracoes->twitter)
-								<a target="_blank" href="{{$configuracoes->twitter}}" title="Twitter"><i class="fab fa-twitter"></i></a>
-							@endif
-							@if ($configuracoes->youtube)
-								<a target="_blank" href="{{$configuracoes->youtube}}" title="Youtube"><i class="fab fa-youtube"></i></a>
-							@endif
-						</div>        
-					</div>					   
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+						<div class="single-footer-widget">
+							<h3>Atendimento</h3>
+							<div class="c-info">
+								@if($configuracoes->rua)
+									<li>
+										<i class="icon fal fa-map-marker-check"></i>
+										<span><i class="zmdi zmdi-pin"></i>
+											{{$configuracoes->rua}}
+											@if($configuracoes->num)
+												, {{$configuracoes->num}}
+											@endif	
+											@if($configuracoes->bairro)
+												<br>{{$configuracoes->bairro}}
+											@endif
+											@if($configuracoes->cidade)  
+												- {{$configuracoes->cidade}}
+											@endif
+										</span>
+									</li>
+								@endif								
+							</div>
+							<div class="c-info"> 
+								@if($configuracoes->email)
+									<span><i class="zmdi zmdi-email"></i></span>
+									<span style="margin-left: 50px;">
+										<a href="mailto:{{$configuracoes->email}}">{{$configuracoes->email}}</a>
+										@if ($configuracoes->email1)
+										<br>
+										<a href="mailto:{{$configuracoes->email1}}">{{$configuracoes->email1}}</a>
+										@endif												
+									</span>
+								@endif 
+							</div>
+							<div class="c-info">  
+								@if($configuracoes->telefone1)
+									<span><i class="zmdi zmdi-phone"></i></span>
+									<span>{{$configuracoes->telefone1}}
+									@if ($configuracoes->telefone2)
+										<br>{{$configuracoes->telefone2}}
+									@endif
+									@if ($configuracoes->telefone3)
+										<br>{{$configuracoes->telefone3}}
+									@endif
+									</span>
+								@endif  
+							</div>
+							<div class="c-info">   
+								@if($configuracoes->whatsapp)
+									<span><i class="zmdi zmdi-whatsapp"></i></span>
+									<span style="margin-left: 50px;">{{$configuracoes->whatsapp}}</span>
+								@endif
+							</div>
+						</div>
+					</div>					
+	
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+						<div class="single-footer-widget">
+							<h3>Fotos</h3>
+							{{--
+							<?php	                       
+								// $readImagens = read('imagens',"WHERE id ORDER BY RAND() LIMIT 12");
+								// foreach($readImagens as $imagem1);
+								// if($imagem1):
+							?>
+							<div class="instagram-image">
+							<?php
+							//    foreach($readImagens as $imagem):
+							// 	   $readGalerias = read('galerias',"WHERE status = '1' AND id_pai IS NOT NULL");
+							// 	   foreach($readGalerias as $galeria);
+							// 		   if($galeria):
+							// 			  echo '<div class="footer-img">';
+							// 			  echo '<a href="'.BASE.'/galerias/galeria/'.$galeria['url'].'"><img alt="'.$galeria['titulo'].'" src="'.BASE.'/tim.php?src=uploads/galerias/imagens/'.$imagem['imagem'].'&w=85&h=80&q=100&zc=1"/></a>';
+							// 			  echo '</div>';
+							// 		   endif;
+							//    endforeach;
+							?>
+							</div>
+							<?php 
+								//endif;
+							?>      --}}                  
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Footer Widget End -->
+		<!-- Footer Bottom Area Start -->
+		<div class="footer-bottom-area bg-black">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="footer-text text-center">
+							&copy; {{date('Y')}} {{$configuracoes->nomedosite}} . Todos os direitos reservados. <span class="small text-silver-dark">Feito com <i style="color:red;" class="fa fa-heart"></i> por <a style="color:#fff;" target="_blank" href="{{env('DESENVOLVEDOR_URL')}}">{{env('DESENVOLVEDOR')}}</a></span>
+						</div>
+					</div>                
+				</div>
+			</div>
+		</div>
+		<!-- Footer Bottom Area End -->
 	</footer>
-	<script async src='https://s3-sa-east-1.amazonaws.com/hbook-universal-js/js/634efbd423248fa77bd1381f.js'></script>
 
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/vendor/modernizr-3.5.0.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/popper.min.js')}}"></script>
+	{{--
+	<script async src='https://s3-sa-east-1.amazonaws.com/hbook-universal-js/js/634efbd423248fa77bd1381f.js'></script>
+	--}}
+
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/vendor/jquery-1.12.4.min.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/bootstrap.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/slick.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/ajax-form.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/paroller.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/wow.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/js_isotope.pkgd.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/imagesloaded.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/parallax.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.waypoints.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/owl.carousel.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.meanmenu.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.counterup.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.scrollUp.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.meanmenu.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/parallax-scroll.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.magnific-popup.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/element-in-view.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/isotope.pkgd.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/imagesloaded.pkgd.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.magnific-popup.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/plugins.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/main.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/datepicker/bootstrap-datepicker.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.maskedinput.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials.min.js')}}"></script>
 
 	<script>
         $(function () {
