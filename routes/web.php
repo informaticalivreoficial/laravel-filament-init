@@ -156,6 +156,7 @@ Route::prefix('admin')->middleware('auth')->group( function(){
     Route::get('posts/categorias', [CatPostController::class, 'index'])->name('categorias.index');
 
     //********************** Blog ************************************************/
+    Route::match(['post', 'get'], 'posts/destaque', [PostController::class, 'destaqueMark'])->name('posts.destaque');
     Route::get('posts/set-status', [PostController::class, 'postSetStatus'])->name('posts.postSetStatus');
     Route::get('posts/set-menu', [PostController::class, 'postSetMenu'])->name('posts.postSetMenu');
     Route::get('posts/delete', [PostController::class, 'delete'])->name('posts.delete');

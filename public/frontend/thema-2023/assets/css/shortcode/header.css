@@ -11,7 +11,7 @@ NOTE: This is Header style file. All Header related style included in this file.
 .header-area:after {
     background: #FF6600 none repeat scroll 0 0;
     content: "";
-    height: 200px;
+    height: 130px;
     left: -8%;
     position: absolute;
     top: 0;
@@ -20,7 +20,7 @@ NOTE: This is Header style file. All Header related style included in this file.
     width: 30%;
 }
 .logo {
-    padding-top: 20px;
+    padding-top: 5px;
     position: relative;
     z-index: 9;
 }
@@ -157,7 +157,7 @@ NOTE: This is Header style file. All Header related style included in this file.
 }
 .sticky .header-top {display: none;}
 .sticky .logo img {width: 79%;}
-.sticky.header-area::after {height: 138px;}
+.sticky.header-area::after {height: 130px;}
 .sticky .main-menu ul {text-align: right;}
 /*----------------------------------------*/
 /*  Mobile Menu

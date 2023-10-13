@@ -58,6 +58,7 @@
                             <td class="text-center">{{$post->countimages()}}</td>
                             
                             <td>
+                                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Marcar como Destaque" class="btn btn-xs {{ ($post->destaque == true ? 'btn-warning' : 'btn-secondary') }} icon-notext j_destaque" data-action="{{ route('posts.destaque', ['id' => $post->id]) }}"><i class="fas fa-award"></i></a>                            
                                 <input type="checkbox" data-onstyle="success" data-offstyle="warning" data-size="mini" class="toggle-class" data-id="{{ $post->id }}" data-toggle="toggle" data-style="slow" data-on="<i class='fas fa-check'></i>" data-off="<i style='color:#fff !important;' class='fas fa-exclamation-triangle'></i>" {{ $post->status == true ? 'checked' : ''}}>
                                 <a href="{{ route('posts.edit', [ 'id' => $post->id ]) }}" class="btn btn-xs btn-default"><i class="fas fa-pen"></i></a>
                                 <a target="_blank" href="{{route('web.'.$linkView,['slug' => $post->slug])}}" class="btn btn-xs btn-info text-white"><i class="fas fa-search"></i></a>
@@ -223,6 +224,23 @@
                         
                     }
                 });
+            });
+
+            $('.j_destaque').click(function (event) {
+                event.preventDefault();
+                var button = $(this);
+                $.post(button.data('action'), {}, function (response) {
+                    if (response.success === true) {
+                        $('.acoes').find('a.btn-warning').removeClass('btn-warning');
+                        button.addClass('btn-warning');                        
+                        toastr.success('Destaque selecionado!');
+                        $('[data-toggle="tooltip"]').tooltip("hide");
+                    }
+                    if(response.success === false){
+                        button.addClass('btn-secondary');
+                        toastr.error(data.error);
+                    }
+                }, 'json');
             });
             
         });

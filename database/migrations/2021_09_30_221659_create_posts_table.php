@@ -26,6 +26,7 @@ class CreatePostsTable extends Migration
             $table->integer('cat_pai')->nullable();
             $table->integer('comentarios')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('destaque')->nullable()->default(0);
             $table->integer('menu')->nullable();
             $table->string('thumb_legenda')->nullable(); 
             $table->date('publish_at')->nullable();

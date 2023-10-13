@@ -151,6 +151,26 @@ class PostController extends Controller
         ])->with(['color' => 'success', 'message' => $request->tipo.' atualizado com sucesso!']);
     } 
 
+    public function destaqueMark(Request $request)
+    {
+        $post = Post::find($request->id);
+        $allPosts = Post::where('id', '!=', $post->id)->get();
+
+        foreach ($allPosts as $postall) {
+            $postall->destaque = null;
+            $postall->save();
+        }
+
+        $post->destaque = true;
+        $post->save();
+
+        $json = [
+            'success' => true,
+        ];
+
+        return response()->json($json);         
+    }
+
     public function postSetStatus(Request $request)
     {        
         $post = Post::find($request->id);

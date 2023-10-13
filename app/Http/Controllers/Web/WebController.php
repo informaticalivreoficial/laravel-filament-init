@@ -41,7 +41,7 @@ class WebController extends Controller
         $apartamentos = Apartamento::available()
                     ->where('exibir_home', 1)
                     ->inRandomOrder()
-                    ->limit(6)
+                    ->limit(4)
                     ->get();
         $artigos = Post::orderBy('created_at', 'DESC')->where('tipo', 'artigo')
                     ->postson()

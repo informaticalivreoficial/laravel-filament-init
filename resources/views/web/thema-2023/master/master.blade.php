@@ -36,97 +36,106 @@
     @endif
 </head>
 <body>
-	<header class="header-area header-three">  
-		<div class="header-top second-header d-none d-md-block">
-			<div class="container">
-				<div class="row align-items-center">      
-					<div class="col-lg-10 col-md-10 d-none d-lg-block">
-						<div class="header-cta">
-							<ul>    
-								@if($configuracoes->email)
-									<li>
-										<i class="far fa-envelope"></i>
-										<span>{{$configuracoes->email}}</span>
-									</li>
-								@endif 
-								@if ($configuracoes->whatsapp)
-									<li>
-										<i class="fab fa-whatsapp"></i>
-										<strong><a href="{{\App\Helpers\WhatsApp::getNumZap($configuracoes->whatsapp, 'Atendimento')}}"> {{$configuracoes->whatsapp}}</a></strong>
-									</li>
-								@endif								
-							</ul>
-						</div>
-					</div>
-				
-					<div class="col-lg-2 col-md-2 d-none d-lg-block text-right">
-						<div class="header-social">
-							<span>
-								@if ($configuracoes->facebook)
-									<a target="_blank" href="{{$configuracoes->facebook}}" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-								@endif
-								@if ($configuracoes->instagram)
-									<a target="_blank" href="{{$configuracoes->instagram}}" title="Instagram"><i class="fab fa-instagram"></i></a>
-								@endif
-								@if ($configuracoes->twitter)
-									<a target="_blank" href="{{$configuracoes->twitter}}" title="Twitter"><i class="fab fa-twitter"></i></a>
-								@endif
-								@if ($configuracoes->youtube)
-									<a target="_blank" href="{{$configuracoes->youtube}}" title="Youtube"><i class="fab fa-youtube"></i></a>
-								@endif
-							</span>                                 
-						</div>
+	<header class="header-area fixed header-sticky">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+					<div class="logo">
+						<a href="{{route('web.home')}}" style="width: 149px !important;">
+							<img src="{{$configuracoes->getLogomarca()}}" alt="{{$configuracoes->nomedosite}}"/>
+						</a>
 					</div>
 				</div>
-			</div>
-		</div>		
-		<div id="header-sticky" class="menu-area">
-			<div class="container">
-				<div class="second-menu">
-					<div class="row align-items-center">
-						<div class="col-xl-2 col-lg-2">
-							<div class="logo">
-								<a href="{{route('web.home')}}">
-									<img src="{{$configuracoes->getLogomarca()}}" alt="{{$configuracoes->nomedosite}}">
-								</a>
-							</div>
+				<div class="col-lg-8 col-md-9 col-sm-9 hidden-xs">
+					<div class="header-top fix">
+						<div class="header-contact">
+							<span class="text-theme">Atendimento:</span>
+							@if($configuracoes->telefone1)
+								<span>{{$configuracoes->telefone1}}</span>								
+							@endif
+							
+							@if ($configuracoes->whatsapp)
+								<img style="margin-left: 20px;" src="{{url('frontend/thema-2023/assets/images/zapzap.png')}}" width="16" height="16" />
+								<span><a href="{{\App\Helpers\WhatsApp::getNumZap($configuracoes->whatsapp, 'Atendimento')}}"> {{$configuracoes->whatsapp}}</a></span>								
+							@endif
 						</div>
-						<div class="col-xl-10 col-lg-10">
-						
-							<div class="main-menu text-center">
-								<nav id="mobile-menu">
-									<ul>
-										@if (!empty($Links) && $Links->count())                            
-											@foreach($Links as $menuItem)                            
-											<li {{($menuItem->children && $menuItem->parent ? 'class=has-sub' : '')}}>
-												<a {{($menuItem->target == 1 ? 'target=_blank' : '')}} href="{{($menuItem->tipo == 'Página' ? route('web.pagina', [ 'slug' => ($menuItem->post != null ? $menuItem->PostObject->slug : '#') ]) : $menuItem->url)}}" {{($menuItem->children && $menuItem->parent ? 'class=dropdown-toggle data-toggle=dropdown' : '')}}>{{ $menuItem->titulo }}{!!($menuItem->children && $menuItem->parent ? "<b class=\"caret\"></b>" : '')!!}</a>
-												@if( $menuItem->children && $menuItem->parent)
-												<ul>
-													@foreach($menuItem->children as $subMenuItem)
-													<li><a {{($subMenuItem->target == 1 ? 'target=_blank' : '')}} href="{{($subMenuItem->tipo == 'Página' ? route('web.pagina', [ 'slug' => ($subMenuItem->post != null ? $subMenuItem->PostObject->slug : '#') ]) : $subMenuItem->url)}}">{{ $subMenuItem->titulo }}</a></li>                                        
-													@endforeach
-												</ul>
-												@endif
-											</li>
+						<div class="header-links">
+							@if ($configuracoes->facebook)
+								<a target="_blank" href="{{$configuracoes->facebook}}" title="Facebook"><i class="zmdi zmdi-facebook"></i></a>
+							@endif
+							@if ($configuracoes->instagram)
+								<a target="_blank" href="{{$configuracoes->instagram}}" title="Instagram"><i class="zmdi zmdi-instagram"></i></a>
+							@endif
+							@if ($configuracoes->twitter)
+								<a target="_blank" href="{{$configuracoes->twitter}}" title="Twitter"><i class="zmdi zmdi-twitter"></i></a>
+							@endif
+							@if ($configuracoes->youtube)
+								<a target="_blank" href="{{$configuracoes->youtube}}" title="Youtube"><i class="zmdi zmdi-youtube"></i></a>
+							@endif
+							@if ($configuracoes->linkedin)
+								<a target="_blank" href="{{$configuracoes->linkedin}}" title="Linkedin"><i class="zmdi zmdi-linkedin"></i></a>
+							@endif							
+						</div>
+					</div>
+					<!-- Mainmenu Start -->
+					<div class="main-menu hidden-xs">
+						<nav>
+							<ul>     
+								@if (!empty($Links) && $Links->count())                            
+									@foreach($Links as $menuItem)                            
+									<li {{($menuItem->children && $menuItem->parent ? 'class=has-sub' : '')}}>
+										<a {{($menuItem->target == 1 ? 'target=_blank' : '')}} href="{{($menuItem->tipo == 'Página' ? route('web.pagina', [ 'slug' => ($menuItem->post != null ? $menuItem->PostObject->slug : '#') ]) : $menuItem->url)}}" {{($menuItem->children && $menuItem->parent ? 'class=dropdown-toggle data-toggle=dropdown' : '')}}>{{ $menuItem->titulo }}{!!($menuItem->children && $menuItem->parent ? "<b class=\"caret\"></b>" : '')!!}</a>
+										@if( $menuItem->children && $menuItem->parent)
+										<ul class="submenu">
+											@foreach($menuItem->children as $subMenuItem)
+											<li><a {{($subMenuItem->target == 1 ? 'target=_blank' : '')}} href="{{($subMenuItem->tipo == 'Página' ? route('web.pagina', [ 'slug' => ($subMenuItem->post != null ? $subMenuItem->PostObject->slug : '#') ]) : $subMenuItem->url)}}">{{ $subMenuItem->titulo }}</a></li>                                        
 											@endforeach
-										@endif                                              
-									</ul>
-								</nav>
-							</div>
-						</div>   
-						{{--<div class="col-xl-2 col-lg-2 d-none d-lg-block">
-							<a href="{{route('web.reservar')}}" class="top-btn mt-10 mb-10">Pré-Reserva </a>
-						</div>--}}
-						
-						<div class="col-12">
-							<div class="mobile-menu"></div>
-						</div>
+										</ul>
+										@endif
+									</li>
+									@endforeach
+								@endif
+
+								<li><a href="/pagina/apartamentos">Apartamentos</a></li> 
+								<li><a href="/blog/artigos">Blog</a></li>                           
+								<li><a href="/pagina/atendimento">Atendimento</a></li>
+								<li><a href="{{route('web.reservar')}}">>> Pré-Reserva <<</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!-- Mainmenu End -->
+				</div>
+			</div>
+		</div>
+
+		<!-- Mobile Menu Area start -->
+		<div class="mobile-menu-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12">
+						<div class="mobile-menu">
+							<nav id="dropdown">
+								<ul>
+									<li><a href="index.php">A Pousada</a>
+										<ul class="submenu">
+											<li><a href="#">Como Chegar</a></li>                                    
+										</ul>
+									</li>
+									<li><a href="#">Apartamentos</a></li>
+									<li><a href="#">Café da manhã</a></li>
+									<li><a href="#">Lazer</a></li>
+									<li><a href="#">Tarifário & Promoções</a></li>                            
+									<li><a href="pagina/atendimento.php">Atendimento</a></li>
+									<li><a href="{{route('web.reservar')}}">>> Pré-Reserva <<</a></li>
+								</ul>
+							</nav>
+						</div>					
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Mobile Menu Area end --> 
 	</header>
-	<!-- header-end -->
 
 	<!-- main-area -->
 	<main>

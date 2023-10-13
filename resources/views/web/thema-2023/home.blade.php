@@ -3,66 +3,163 @@
 @section('content')
 
     @if (!empty($slides) && $slides->count() > 0)
-        <section id="home" class="slider-area fix p-relative">               
-            <div class="slider-active" style="background: #101010;">            
-                @foreach ($slides as $key => $slide)  
-                    <div class="single-slider slider-bg d-flex align-items-center" style="background-image: url({{$slide->getimagem()}}); background-size: cover;">
-                        <div class="container">
-                            <div class="row justify-content-center align-items-center">                  
-                                <div class="col-lg-7 col-md-7">
-                                    <div class="slider-content s-slider-content mt-80 text-center">
-                                        @if ($slide->link != null)     
-                                            <div class="slider-btn mt-30 mb-105">                    
-                                                <a href="{{$slide->link}}" class="btn ss-btn active mr-15" data-animation="fadeInLeft" data-delay=".4s" {{($slide->target == 1 ? 'target="_blank"' : '')}}>
-                                                    {{$slide->titulo}}  
-                                                </a> 
-                                            </div> 
-                                        @endif         
+        <section class="slider-area">	
+            <div class="slider-wrapper">
+                @foreach ($slides as $key => $slide)
+                    <div class="single-slide" style="background-image: url({{$slide->getimagem()}});">
+                        <div class="banner-content overlay">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <div class="text-content-wrapper slide-two">
+                                            <div class="text-content text-center">
+                                            
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>                    
+                                </div>
                             </div>
                         </div>
-                    </div>                
-                @endforeach 
+                    </div>
+                {{--
+                    //echo '<div class="item">';
+                //    echo '    <div class="details">';
+                //    echo '<div class="title"><span>'.$slide['titulo'].'</span></div>';
+                //    if(!$slide['link']):
+                //       echo ''; 
+                //    else:
+                //       echo '<div class="buttoncontainer"><a href="'.$slide['link'].'" class="button"><span data-hover="Conhe&ccedil;a mais">Conhe&ccedil;a mais</span></a></div>'; 
+                //    endif;        
+                //    echo '    </div>';
+                //    echo '    <img alt="" src="'.BASE.'/tim.php?src='.BASE.'/uploads/banners/'.$slide['imagem'].'&w=1800&h=800&q=100&zc=1" width="1800" height="800" />';
+                //    echo '</div>';--}}
+                @endforeach
             </div>
         </section>
     @endif
 
-    @if (!empty($apartamentos) && $apartamentos->count() > 0)
-        <section id="services" class="services-area pt-113 pb-150">  
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-12">    
-                        <div class="section-title center-align mb-50 text-center">
-                            <h2>Apartamentos</h2>
+    <section class="about-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="" method="post" class="search-form">
+                        <div class="form-container fix">
+                            <div class="box-select">
+                                <div class="select date">
+                                    <input type="text" id="j_data" name="checkini" autocomplete="off" placeholder="Checkin" />
+                                </div>
+                                <div class="select date">
+                                    <input type="text" id="j_data1" name="checkouti" autocomplete="off" placeholder="Checkout" />
+                                </div>
+                                <div class="select arrow">
+                                    <select name="apart_id">
+                                        @if(!empty($acomodacoes) && $acomodacoes->count() > 0)
+                                            <option value="">Selecione</option>
+                                            @foreach($acomodacoes as $apartamento)
+                                                <option value="{{$apartamento->id}}" {{(!empty($dadosForm) && $dadosForm['apart_id'] == $apartamento->id ? 'selected' : '')}}>{{$apartamento->titulo}}</option>
+                                            @endforeach                                                                        
+                                        @endif
+                                    </select>
+                                </div>                                    
+                            </div>
+                            <button type="submit" class="search default-btn" name="SendReserva">Pré-reserva</button>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+            
+           <div class="row">
+                <div class="col-md-7">
+                    <div class="video-wrapper mt-90">
+                        <div class="video-overlay">
+                            <img src="" alt=""/>                                
+                        </div>                            
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="about-text">
+                        <div class="section-title">
+                            <h3>titulo</h3>
+                            content 750
+                        </div>
+                        <div class="about-links">
+                            <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                            <a href="#"><i class="zmdi zmdi-instagram"></i></a>
+                            <a href="#"><i class="zmdi zmdi-rss"></i></a>
+                            <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                            <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="row services-active">
-                    @foreach($apartamentos as $apartamento)
-                        <div class="col-xl-4 col-md-6">
-                            <div class="single-services mb-30">
-                                <div class="services-thumb">
-                                    <a href="{{route('web.acomodacao', ['slug' => $apartamento->slug])}}">
-                                    <img height="350" src="{{$apartamento->cover()}}" alt="{{$apartamento->titulo}}">
-                                    </a>
-                                </div>
-                                <div class="services-content"> 
-                                    <div class="day-book">
-                                        <ul>
-                                            @if ($apartamento->exibir_valores == 1)
-                                                <li>R$ {{$apartamento->valor_cafe}}</li>
-                                            @endif                                        
-                                            <li><a href="{{route('web.acomodacao', ['slug' => $apartamento->slug])}}">Reservar</a></li>
-                                        </ul>
-                                    </div>
-                                    <h4><a href="{{route('web.acomodacao', ['slug' => $apartamento->slug])}}">{{$apartamento->titulo}}</a></h4>    
-                                    {!!\App\Helpers\Renato::Words($apartamento->content, 15)!!}                               
-                                </div>
-                            </div>
+            </div>
+                          
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @if (!empty($apartamentos) && $apartamentos->count() > 0)
+        <section class="room-area pt-90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-title text-center">
+                            <h3>Apartamentos</h3>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
+            </div>
+            <div class="container-fluid">  
+                @foreach($apartamentos as $apartamento) 
+                    <div class="single-room">
+                        <img height="422" src="{{$apartamento->cover()}}" alt="{{$apartamento->cover()}}" title="{{$apartamento->titulo}}"/>
+                        <div class="room-hover text-center">
+                            <div class="hover-text">
+                                <h3 style="font-size: 22px;"><a href="{{route('web.acomodacao', ['slug' => $apartamento->slug])}}">{{$apartamento->titulo}}</a></h3>
+                                <p>&nbsp;</p>
+                                <div class="room-btn">
+                                    <a href="{{route('web.acomodacao', ['slug' => $apartamento->slug])}}" class="default-btn">Ver Detalhes</a>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                @endforeach     
             </div>
         </section>
     @endif
