@@ -165,63 +165,124 @@
     @endif
 
     @if (!empty($artigos) && $artigos->count() > 0)
-        <section id="blog" class="blog-area p-relative fix pt-90 pb-90">
-            <div class="animations-02"><img src="img/bg/an-img-06.png" alt="contact-bg-an-05"></div>
+        <section class="blog-area" style="margin-top: 60px;margin-bottom: 40px;">
             <div class="container">
-                <div class="row align-items-center"> 
-                    <div class="col-lg-12">
-                        <div class="section-title center-align mb-50 text-center wow fadeInDown animated" data-animation="fadeInDown" data-delay=".4s">
-                            <h2>
-                                Blog
-                            </h2>
-                        </div>               
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-title text-center">
+                            <h3>Blog</h3>
+                            <p>Acompanhe nossas novidades, dicas turísticas, passeios e muito mais</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    @foreach($artigos as $artigo)
-                        <div class="col-lg-4 col-md-6">
-                            <div class="single-post2 hover-zoomin mb-30 wow fadeInUp animated" data-animation="fadeInUp" data-delay=".4s">
-                                <div class="blog-thumb2">
-                                    <a href="{{route('web.blog.artigo', ['slug' => $artigo->slug])}}">
-                                        <img width="241" src="{{$artigo->cover()}}" alt="{{$artigo->titulo}}">
-                                    </a>
-                                </div>                    
-                                <div class="blog-content2">    
-                                    <h4><a href="{{route('web.blog.artigo', ['slug' => $artigo->slug])}}">{{$artigo->titulo}}</a></h4> 
-                                    {!!\App\Helpers\Renato::Words($artigo->content, 15)!!}
-                                    <div class="blog-btn"><a href="{{route('web.blog.artigo', ['slug' => $artigo->slug])}}">Leia +</a></div>                         
+                    <div class="blog-carousel">
+                        @foreach($artigos as $artigo)
+                            <div class="col-xs-12">
+                                <div class="single-blog-wrapper">
+                                    <div class="single-blog">
+                                        <div class="blog-image">
+                                            <img src="{{$artigo->cover()}}" alt="{{$artigo->titulo}}"/>
+                                        </div>
+                                        <div class="blog-text">
+                                            <h3>{{$artigo->titulo}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="blog-hover">
+                                        <h3><a href="{{route('web.blog.artigo', ['slug' => $artigo->slug])}}" title="{{$artigo->titulo}}">{{$artigo->titulo}}</a></h3>
+                                        {!!\App\Helpers\Renato::Words($artigo->content, 15)!!}
+                                        <a href="{{route('web.blog.artigo', ['slug' => $artigo->slug])}}" class="default-btn">Leia mais</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </section>        
     @endif
 
-    <section id="video" class="video-area pt-150 pb-150 p-relative" style="background-image:url({{url('frontend/'.$configuracoes->template.'/assets/images/bg-gallery.jpg')}}); background-repeat: no-repeat; background-position: center bottom; background-size:cover;">
-        <!-- Lines -->
-                   <div class="content-lines-wrapper2">
-                       <div class="content-lines-inner2">
-                           <div class="content-lines2"></div>
-                       </div>
-                   </div>
-                  <!-- Lines -->
-       <div class="container">                   
-            <div class="row">
-               <div class="col-12">
-                   <div class="s-video-wrap">
-                       <div class="s-video-content">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m0!3m2!1spt-BR!2sbr!4v1488893723237!6m8!1m7!1sF%3A-hNOO3QBnDs4%2FWJtai4KscMI%2FAAAAAAAAEJs%2FB_Qh4lC_tTAGJL50IBdEP-e3tWMjIMveQCLIB!2m2!1d-23.43332223874241!2d-45.07221445441246!3f150.19085246815183!4f-0.20905841325189556!5f0.7820865974627469" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="border:0;width: 80%;" height="450" allowfullscreen></iframe>
-                       </div>
-                   </div>                   
-               </div>
-               
-           </div>
-       </div>
-   </section>
+    @if (!empty($newsletterForm))
+        <section class="newsletter-area bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-sm-12 col-xs-12">
+                        <div class="newsletter-container">                    
+                            <h3>Assine Nossa Newsletter</h3>                                       
+                                <div class="newsletter-form">
+                                    <form method="post" action="" class="mc-form fix j_submitnewsletter">
+                                        @csrf
+                                        <div id="js-newsletter-result"></div>
+                                        <div class="form_hide">
+                                            <!-- HONEYPOT -->
+                                            <input type="hidden" class="noclear" name="bairro" value="" />
+                                            <input type="text" class="noclear" style="display: none;" name="cidade" value="" />
+                                            <input type="hidden" class="noclear" name="status" value="1" />
+                                            <input type="hidden" class="noclear" name="nome" value="#Cadastrado pelo Site" />
+                                            <input id="mc-email" type="email" name="email" placeholder="Digite seu E-mail"/>
+                                            <button id="mc-submit" type="submit" class="default-btn js-subscribe-btn">Cadastrar</button>                              
+                                        </div>
+                                    </form>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
 @endsection
 
 @section('js')
-    
+    <script>
+        $(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // Seletor, Evento/efeitos, CallBack, Ação
+            $('.j_submitnewsletter').submit(function (){
+                var form = $(this);
+                var dataString = $(form).serialize();
+
+                $.ajax({
+                    url: "{{ route('web.sendNewsletter') }}",
+                    data: dataString,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    beforeSend: function(){
+                        form.find(".js-subscribe-btn").attr("disabled", true);
+                        form.find('.js-subscribe-btn').val("Carregando...");                
+                        form.find('.alert').fadeOut(500, function(){
+                            $(this).remove();
+                        });
+                    },
+                    success: function(response){
+                            $('html, body').animate({scrollTop:$('#js-newsletter-result').offset().top-70}, 'slow');
+                        if(response.error){
+                            form.find('#js-newsletter-result').html('<div class="alert alert-danger error-msg">'+ response.error +'</div>');
+                            form.find('.error-msg').fadeIn();                    
+                        }else{
+                            form.find('#js-newsletter-result').html('<div class="alert alert-success error-msg">'+ response.sucess +'</div>');
+                            form.find('.error-msg').fadeIn();                    
+                            form.find('input[class!="noclear"]').val('');
+                            form.find('.form_hide').fadeOut(500);
+                        }
+                    },
+                    complete: function(response){
+                        form.find(".js-subscribe-btn").attr("disabled", false);
+                        form.find('.js-subscribe-btn').val("Cadastrar");                                
+                    }
+
+                });
+
+                return false;
+            });
+
+        });
+    </script>
 @endsection

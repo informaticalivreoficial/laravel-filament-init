@@ -12,15 +12,12 @@ use App\Mail\Web\AtendimentoRetorno;
 use App\Mail\Web\ReservaRetorno;
 use App\Mail\Web\ReservaSend;
 use App\Models\Apartamento;
-use App\Models\Avaliacoes;
 use App\Models\Empresa;
 use App\Models\Newsletter;
 use App\Models\NewsletterCat;
 use App\Models\Reservas;
 use App\Models\User;
-use App\Services\CidadeService;
 use App\Services\ConfigService;
-use App\Services\EstadoService;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -28,14 +25,9 @@ class SendEmailController extends Controller
 {
     protected $configService, $estadoService, $cidadeService;
 
-    public function __construct(
-        ConfigService $configService, 
-        EstadoService $estadoService, 
-        CidadeService $cidadeService)
+    public function __construct(ConfigService $configService)
     {
         $this->configService = $configService;
-        $this->cidadeService = $cidadeService;
-        $this->estadoService = $estadoService;
     }
 
     public function sendEmail(Request $request)
