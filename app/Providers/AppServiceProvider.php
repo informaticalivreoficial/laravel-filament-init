@@ -50,7 +50,10 @@ class AppServiceProvider extends ServiceProvider
 
         $configuracoes = \App\Models\Configuracoes::find(1); 
         View()->share('configuracoes', $configuracoes);
+
+        $gbGallery = \App\Models\Galeria::available()->inRandomOrder()->limit(3)->get(); 
+        View()->share('gbGallery', $gbGallery);
         
-        //Paginator::useBootstrap();
+        Paginator::useBootstrap();
     }
 }

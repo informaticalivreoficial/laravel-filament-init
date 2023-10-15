@@ -49,14 +49,14 @@
 				<div class="col-lg-8 col-md-9 col-sm-9 hidden-xs">
 					<div class="header-top fix">
 						<div class="header-contact">
-							<span class="text-theme">Atendimento:</span>
+							<span class="text-theme" style="color: #fff !important;">Atendimento:</span>
 							@if($configuracoes->telefone1)
-								<span>{{$configuracoes->telefone1}}</span>								
+								<span><a style="color: #fff !important;" href="tel:{{\App\Helpers\Renato::limpaTelefone($configuracoes->telefone1)}}">{{$configuracoes->telefone1}}</a></span>								
 							@endif
 							
 							@if ($configuracoes->whatsapp)
 								<img style="margin-left: 20px;" src="{{url('frontend/thema-2023/assets/images/zapzap.png')}}" width="16" height="16" />
-								<span><a href="{{\App\Helpers\WhatsApp::getNumZap($configuracoes->whatsapp, 'Atendimento')}}"> {{$configuracoes->whatsapp}}</a></span>								
+								<span><a style="color: #fff !important;" target="_blank" class="sharezap" href="#"> {{$configuracoes->whatsapp}}</a></span>								
 							@endif
 						</div>
 						<div class="header-links">
@@ -176,7 +176,17 @@
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 						<div class="single-footer-widget">
-							<h3>Atendimento</h3>
+							<h3>links</h3>
+							<ul class="footer-list">
+								<li><a href="{{route('web.home')}}" title="Início">Início</a></li>
+								<li><a href="team.html" title="Acomodações">Acomodações</a></li>
+								<li><a href="room-grid.html" title="Galerias de Fotos">Galerias de Fotos</li>
+								<li><a href="event.html" title="Blog">Blog</a></li>
+								<li><a href="location.html" title="Pré-reserva">Pré-reserva</a></li>
+								<li><a href="contact.html" title="Fale Conosco">Fale Conosco</a></li>
+								<li><a href="contact.html" title="Política de Privacidade">Política de Privacidade</a></li>
+							</ul>
+							<h3 style="margin-top: 30px !important;">Atendimento</h3>
 							<div class="c-info">
 								@if($configuracoes->rua)
 									<li>
@@ -198,63 +208,69 @@
 							</div>
 							<div class="c-info"> 
 								@if($configuracoes->email)
-									<span><i class="zmdi zmdi-email"></i></span>
-									<span style="margin-left: 50px;">
+									<p>
+										<i class="zmdi zmdi-email" style="margin-right:10px;color: #FF6600;"></i>									
 										<a href="mailto:{{$configuracoes->email}}">{{$configuracoes->email}}</a>
-										@if ($configuracoes->email1)
-										<br>
+									</p>
+								@endif 
+								@if($configuracoes->email1)
+									<p>
+										<i class="zmdi zmdi-email" style="margin-right:10px;color: #FF6600;"></i>									
 										<a href="mailto:{{$configuracoes->email1}}">{{$configuracoes->email1}}</a>
-										@endif												
-									</span>
+									</p>
 								@endif 
 							</div>
 							<div class="c-info">  
-								@if($configuracoes->telefone1)
-									<span><i class="zmdi zmdi-phone"></i></span>
-									<span>{{$configuracoes->telefone1}}
-									@if ($configuracoes->telefone2)
-										<br>{{$configuracoes->telefone2}}
-									@endif
+								@if($configuracoes->telefone1 || $configuracoes->telefone2 || $configuracoes->telefone3)
+									<p>
+										<i class="zmdi zmdi-phone" style="margin-right:10px;color: #FF6600;"></i>
+										@if ($configuracoes->telefone1 && $configuracoes->telefone2)
+											<a href="tel:{{\App\Helpers\Renato::limpaTelefone($configuracoes->telefone1)}}">{{$configuracoes->telefone1}}</a> - <a href="tel:{{\App\Helpers\Renato::limpaTelefone($configuracoes->telefone2)}}">{{$configuracoes->telefone2}}</a>
+										@elseif($configuracoes->telefone1 && !$configuracoes->telefone2)
+											<a href="tel:{{\App\Helpers\Renato::limpaTelefone($configuracoes->telefone1)}}">{{$configuracoes->telefone1}}</a>
+										@elseif(!$configuracoes->telefone1 && $configuracoes->telefone2)
+											<a href="tel:{{\App\Helpers\Renato::limpaTelefone($configuracoes->telefone2)}}">{{$configuracoes->telefone2}}</a>
+										@endif
+									</p>	
+
 									@if ($configuracoes->telefone3)
-										<br>{{$configuracoes->telefone3}}
+										<p>
+											<i class="zmdi zmdi-phone" style="margin-right:10px;color: #FF6600;"></i>
+											<a href="tel:{{\App\Helpers\Renato::limpaTelefone($configuracoes->telefone3)}}">{{$configuracoes->telefone3}}</a>
+										</p>										
 									@endif
-									</span>
+									
 								@endif  
 							</div>
 							<div class="c-info">   
 								@if($configuracoes->whatsapp)
-									<span><i class="zmdi zmdi-whatsapp"></i></span>
-									<span style="margin-left: 50px;">{{$configuracoes->whatsapp}}</span>
+									<i class="zmdi zmdi-whatsapp" style="margin-right:10px;color: #FF6600;"></i>
+									<a class="sharezap" href="#" target="_blank">{{$configuracoes->whatsapp}}</a>
 								@endif
-							</div>
+							</div>							
 						</div>
 					</div>					
 	
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 						<div class="single-footer-widget">
 							<h3>Fotos</h3>
-							{{--
-							<?php	                       
-								// $readImagens = read('imagens',"WHERE id ORDER BY RAND() LIMIT 12");
-								// foreach($readImagens as $imagem1);
-								// if($imagem1):
-							?>
-							<div class="instagram-image">
-							<?php
-							//    foreach($readImagens as $imagem):
-							// 	   $readGalerias = read('galerias',"WHERE status = '1' AND id_pai IS NOT NULL");
-							// 	   foreach($readGalerias as $galeria);
-							// 		   if($galeria):
-							// 			  echo '<div class="footer-img">';
-							// 			  echo '<a href="'.BASE.'/galerias/galeria/'.$galeria['url'].'"><img alt="'.$galeria['titulo'].'" src="'.BASE.'/tim.php?src=uploads/galerias/imagens/'.$imagem['imagem'].'&w=85&h=80&q=100&zc=1"/></a>';
-							// 			  echo '</div>';
-							// 		   endif;
-							//    endforeach;
-							?>
-							</div>
-							<?php 
-								//endif;
-							?>      --}}                  
+							@if (!empty($gbGallery) && $gbGallery->count() > 0)
+								<div class="instagram-image">
+									@foreach ($gbGallery as $galeria)
+										@if($galeria->images()->get()->count() > 0)
+											@foreach ($galeria->images()->get() as $key => $gb)
+												@if ($key <= 5)
+													<div class="footer-img">
+														<a title="Galeria de fotos {{$galeria->titulo}}" href="{{route('web.galeria', [ 'slug' => $galeria->slug ])}}">
+															<img width="85" height="80" alt="{{$galeria->titulo}}" src="{{$gb->url_image}}"/>
+														</a>
+													</div>
+												@endif												
+											@endforeach
+										@endif
+									@endforeach	
+								</div>							
+							@endif							                  
 						</div>
 					</div>
 				</div>
@@ -276,9 +292,6 @@
 		<!-- Footer Bottom Area End -->
 	</footer>
 
-	{{--
-	<script async src='https://s3-sa-east-1.amazonaws.com/hbook-universal-js/js/634efbd423248fa77bd1381f.js'></script>
-	--}}
 
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/vendor/jquery-1.12.4.min.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/bootstrap.min.js')}}"></script>
@@ -320,6 +333,38 @@
     
         gtag('config', '{{$configuracoes->tagmanager_id}}');
     </script>
+
+	<script>
+		$(document).ready(function() {
+			var isMobile = {
+				Android: function() {
+					return navigator.userAgent.match(/Android/i);
+				},
+				BlackBerry: function() {
+					return navigator.userAgent.match(/BlackBerry/i);
+				},
+				iOS: function() {
+					return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+				},
+				Opera: function() {
+					return navigator.userAgent.match(/Opera Mini/i);
+				},
+				Windows: function() {
+					return navigator.userAgent.match(/IEMobile/i);
+				},
+				any: function() {
+					return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+				}
+			};
+			if( isMobile.any() ) {
+				$('.sharezap').attr("href", "https://api.whatsapp.com/send?l=pt_pt&phone="+{{ \App\Helpers\Renato::limpatelefone($configuracoes->whatsapp) }}+"&text=Atendimento "+"{{$configuracoes->nomedosite}}");
+				return true; // está utilizando celular
+			}else{
+				$('.sharezap').attr("href", "https://web.whatsapp.com/send?l=pt_pt&phone="+{{ \App\Helpers\Renato::limpatelefone($configuracoes->whatsapp) }}+"&text=Atendimento "+"{{$configuracoes->nomedosite}}");
+				return false; // não é celular
+			}
+		});
+	</script>
 
     
     </body>

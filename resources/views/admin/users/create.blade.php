@@ -350,7 +350,7 @@
                                             </div>
                                             <div class="form-check d-inline mx-2">
                                                 <input id="client" class="form-check-input" type="checkbox"  name="client" {{ (old('client') == 'on' || old('client') == true ? 'checked' : '') }}>
-                                                <label for="client" class="form-check-label">Aluno</label>
+                                                <label for="client" class="form-check-label">Cliente</label>
                                             </div>
                                             @if(\Illuminate\Support\Facades\Auth::user()->superadmin == 1)
                                             <div class="form-check d-inline mx-2">
