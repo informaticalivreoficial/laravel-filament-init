@@ -179,12 +179,12 @@
 							<h3>links</h3>
 							<ul class="footer-list">
 								<li><a href="{{route('web.home')}}" title="Início">Início</a></li>
-								<li><a href="team.html" title="Acomodações">Acomodações</a></li>
-								<li><a href="room-grid.html" title="Galerias de Fotos">Galerias de Fotos</li>
-								<li><a href="event.html" title="Blog">Blog</a></li>
-								<li><a href="location.html" title="Pré-reserva">Pré-reserva</a></li>
-								<li><a href="contact.html" title="Fale Conosco">Fale Conosco</a></li>
-								<li><a href="contact.html" title="Política de Privacidade">Política de Privacidade</a></li>
+								<li><a href="{{route('web.acomodacoes')}}" title="Acomodações">Acomodações</a></li>
+								<li><a href="{{route('web.galerias')}}" title="Galerias de Fotos">Galerias de Fotos</li>
+								<li><a href="{{route('web.blog.artigos')}}" title="Blog">Blog</a></li>
+								<li><a href="{{route('web.reservar')}}" title="Pré-reserva">Pré-reserva</a></li>
+								<li><a href="{{route('web.atendimento')}}" title="Fale Conosco">Fale Conosco</a></li>
+								<li><a href="{{route('web.politica')}}" title="Política de Privacidade">Política de Privacidade</a></li>
 							</ul>
 							<h3 style="margin-top: 30px !important;">Atendimento</h3>
 							<div class="c-info">
