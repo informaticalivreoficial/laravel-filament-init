@@ -51,6 +51,6 @@ class AppServiceProvider extends ServiceProvider
         $configuracoes = \App\Models\Configuracoes::find(1); 
         View()->share('configuracoes', $configuracoes);
         
-        Paginator::useBootstrap();
+        //Paginator::useBootstrap();
     }
 }

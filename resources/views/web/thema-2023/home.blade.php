@@ -262,7 +262,7 @@
                         });
                     },
                     success: function(response){
-                            $('html, body').animate({scrollTop:$('#js-newsletter-result').offset().top-70}, 'slow');
+                            $('html, body').animate({scrollTop:$('#js-newsletter-result').offset().top-150}, 'slow');
                         if(response.error){
                             form.find('#js-newsletter-result').html('<div class="alert alert-danger error-msg">'+ response.error +'</div>');
                             form.find('.error-msg').fadeIn();                    
