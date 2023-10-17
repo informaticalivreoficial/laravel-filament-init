@@ -13,8 +13,6 @@ use App\Models\{
     Apartamento,
     Post,
     CatPost,
-    Cidades,
-    Estados,
     Galeria,
     Newsletter,
     Slide,

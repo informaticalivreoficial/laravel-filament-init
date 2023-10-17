@@ -293,9 +293,9 @@
 	</footer>
 
 
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/vendor/jquery-1.12.4.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery-1.12.4.min.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/bootstrap.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/modernizr-2.8.3.min.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/owl.carousel.min.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.meanmenu.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.counterup.min.js')}}"></script>
@@ -309,14 +309,12 @@
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials.min.js')}}"></script>
 
 	<script>
-        $(function () {
-    
+        $(function () {    
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            });
-    
+            });    
         });
     </script>
 

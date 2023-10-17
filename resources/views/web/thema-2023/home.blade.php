@@ -182,7 +182,7 @@
                                 <div class="single-blog-wrapper">
                                     <div class="single-blog">
                                         <div class="blog-image">
-                                            <img src="{{$artigo->cover()}}" alt="{{$artigo->titulo}}"/>
+                                            <img width="370" height="250" src="{{$artigo->cover()}}" alt="{{$artigo->titulo}}"/>
                                         </div>
                                         <div class="blog-text">
                                             <h3>{{$artigo->titulo}}</h3>
@@ -237,12 +237,6 @@
 @section('js')
     <script>
         $(function () {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
 
             // Seletor, Evento/efeitos, CallBack, Ação
             $('.j_submitnewsletter').submit(function (){
