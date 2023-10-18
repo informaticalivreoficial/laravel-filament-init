@@ -178,7 +178,7 @@
                                                         <div class="col-12 col-md-4 col-lg-3"> 
                                                             <div class="form-group">
                                                                 <label class="labelforms text-muted"><b>Bairro:</b></label>
-                                                                <input type="text" class="form-control" placeholder="Bairro" id="bairro" name="bairro" value="{{old('bairro') ?? $user->bairro}}">
+                                                                <input type="text" class="form-control" id="bairro" name="bairro" value="{{old('bairro') ?? $user->bairro}}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -453,28 +453,7 @@
                 }
             }
             document.getElementById("img-input").addEventListener("change", readImage, false);
-                        
-           
-            $('#state-dd').on('change', function () {
-                var idState = this.value;
-                $("#city-dd").html('');
-                $.ajax({
-                    url: "{{route('users.fetchCity')}}",
-                    type: "POST",
-                    data: {
-                        estado_id: idState,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (res) {
-                        $('#city-dd').html('<option value="">Selecione a cidade</option>');
-                        $.each(res.cidades, function (key, value) {
-                            $("#city-dd").append('<option value="' + value
-                                .cidade_id + '">' + value.cidade_nome + '</option>');
-                        });
-                    }
-                });
-            });
+            
             
             // Visualizar senha no input
             var senha = $('#senha');
@@ -487,5 +466,53 @@
             });
             
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+            }
+            
+            $("#cep").blur(function() {
+
+                var cep = $(this).val().replace(/\D/g, '');
+
+                if (cep != "") {
+                    
+                    var validacep = /^[0-9]{8}$/;
+
+                    if(validacep.test(cep)) {
+                        
+                        $("#rua").val("Carregando...");
+                        $("#bairro").val("Carregando...");
+                        $("#cidade").val("Carregando...");
+                        $("#uf").val("Carregando...");
+                        
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                            } else {
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } else {
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } else {
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
     </script>
 @stop

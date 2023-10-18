@@ -81,6 +81,7 @@
 					<div class="main-menu hidden-xs">
 						<nav>
 							<ul>     
+								<li><a href="{{route('web.acomodacoes')}}">Apartamentos</a></li> 
 								@if (!empty($Links) && $Links->count())                            
 									@foreach($Links as $menuItem)                            
 									<li {{($menuItem->children && $menuItem->parent ? 'class=has-sub' : '')}}>
@@ -96,9 +97,9 @@
 									@endforeach
 								@endif
 
-								<li><a href="/pagina/apartamentos">Apartamentos</a></li> 
-								<li><a href="/blog/artigos">Blog</a></li>                           
-								<li><a href="/pagina/atendimento">Atendimento</a></li>
+								
+								<li><a href="{{route('web.blog.artigos')}}">Blog</a></li>                           
+								<li><a href="{{route('web.atendimento')}}">Atendimento</a></li>
 								<li><a href="{{route('web.reservar')}}">>> Pré-Reserva <<</a></li>
 							</ul>
 						</nav>
