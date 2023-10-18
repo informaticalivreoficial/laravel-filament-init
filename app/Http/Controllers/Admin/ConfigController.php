@@ -43,32 +43,32 @@ class ConfigController extends Controller
         $config = Configuracoes::where('id', $id)->first(); 
 
         if(!empty($request->file('metaimg'))){
-            Storage::delete($config->metaimg);
+            !is_null($config->metaimg) && Storage::delete($config->metaimg);
             $config->metaimg = '';
         }
         
         if(!empty($request->file('logomarca'))){
-            Storage::delete($config->logomarca);
+            !is_null($config->marcadagua) && Storage::delete($config->logomarca);
             $config->logomarca = '';
         }
         
         if(!empty($request->file('logomarca_admin'))){
-            Storage::delete($config->logomarca_admin);
+            !is_null($config->logomarca_admin) && Storage::delete($config->logomarca_admin);
             $config->logomarca_admin = '';
         }
         
         if(!empty($request->file('favicon'))){
-            Storage::delete($config->favicon);
+            !is_null($config->favicon) && Storage::delete($config->favicon);
             $config->favicon = '';
         }
-        
+
         if(!empty($request->file('marcadagua'))){
-            Storage::delete($config->marcadagua);
+            !is_null($config->marcadagua) && Storage::delete($config->marcadagua);
             $config->marcadagua = '';
         }
         
         if(!empty($request->file('imgheader'))){
-            Storage::delete($config->imgheader);
+            !is_null($config->imgheader) && Storage::delete($config->imgheader);
             $config->imgheader = '';
         }
         
