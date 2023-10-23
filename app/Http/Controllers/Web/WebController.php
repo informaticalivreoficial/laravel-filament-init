@@ -211,7 +211,7 @@ class WebController extends Controller
 
     public function acomodacoes()
     {
-        $acomodacoes = Apartamento::available()->get();
+        $acomodacoes = Apartamento::available()->paginate(20);
         $head = $this->seo->render('Apartamentos - ' . $this->configService->getConfig()->nomedosite,
             $this->configService->getConfig()->descricao ?? 'Informática Livre desenvolvimento de sistemas web desde 2005',
             route('web.acomodacoes'),
@@ -254,13 +254,6 @@ class WebController extends Controller
         $acomodacao = Apartamento::where('slug', $slug)->available()->first();
         $acomodacoes = Apartamento::where('id', '!=', $acomodacao->id)->available()->get();
 
-        $postsTags = Post::orderBy('views', 'DESC')
-            ->where('tags', '!=', '')
-            ->where('id', '!=', $acomodacao->id)
-            ->postson()
-            ->limit(11)
-            ->get();
-
         $acomodacao->views = $acomodacao->views + 1;
         $acomodacao->save();
 
@@ -276,9 +269,7 @@ class WebController extends Controller
         return view('web.'.$this->configService->getConfig()->template.'.acomodacoes.acomodacao',[
             'head' => $head,
             'acomodacao' => $acomodacao,
-            'acomodacoes' => $acomodacoes,
-            'postsTags' => $postsTags,
-            'estados' => $this->estadoService->getEstados()
+            'acomodacoes' => $acomodacoes
         ]);
     }
 

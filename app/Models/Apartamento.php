@@ -43,6 +43,7 @@ class Apartamento extends Model
         'vista_para_mar',
         'ventilador_teto',
         'wifi',
+        'ducha_com_aquecimento',
     ];
 
     /**
@@ -281,6 +282,16 @@ class Apartamento extends Model
     public function setVentiladorTetoAttribute($value)
     {
         $this->attributes['ventilador_teto'] = (($value === true || $value === 'on') ? 1 : 0);
+    }
+
+    /**
+     * Mutator Ventilador de Teto
+     *
+     * @param $value
+     */
+    public function setDuchaComAquecimentoAttribute($value)
+    {
+        $this->attributes['ducha_com_aquecimento'] = (($value === true || $value === 'on') ? 1 : 0);
     }
 
     /**

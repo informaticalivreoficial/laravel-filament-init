@@ -90,6 +90,7 @@ class ApartamentoController extends Controller
         $apartamento->setCofreIndividualAttribute($request->cofre_individual);
         $apartamento->setFrigobarAttribute($request->frigobar);
         $apartamento->setServicoQuartoAttribute($request->servico_quarto);
+        $apartamento->setDuchaComAquecimentoAttribute($request->ducha_com_aquecimento);
         $apartamento->setWifiAttribute($request->wifi);
 
         $apartamento->save();

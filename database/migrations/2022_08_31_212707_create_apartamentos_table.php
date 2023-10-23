@@ -48,6 +48,7 @@ class CreateApartamentosTable extends Migration
             $table->boolean('lareira')->nullable();
             $table->boolean('elevador')->nullable();
             $table->boolean('vista_para_mar')->nullable();
+            $table->boolean('ducha_com_aquecimento')->nullable();
             $table->boolean('ventilador_teto')->nullable();
             $table->boolean('wifi')->nullable();
 
