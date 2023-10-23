@@ -26,8 +26,7 @@
 	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/responsive.css')}}">
 	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/renato.css')}}">
 	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/bootstrap-datepicker3.min.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials.css')}}">
-	<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials-theme-flat.css')}}">
+	
 		
     <link rel="shortcut icon" type="image/x-icon" href="{{$configuracoes->getfaveicon()}}" sizes="32x32" />
     
@@ -306,8 +305,7 @@
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/plugins.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/main.js')}}"></script>
 	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/datepicker/bootstrap-datepicker.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.maskedinput.min.js')}}"></script>
-	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials.min.js')}}"></script>
+	<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jquery.maskedinput.min.js')}}"></script>	
 
 	<script>
         $(function () {    

@@ -113,10 +113,10 @@ class Post extends Model
         }
 
         if(empty($cover['path']) || !Storage::disk()->exists($cover['path'])) {
-            return url(asset('backend/assets/images/image.jpg'));
+            return null;
         }
 
-        return Storage::url($cover['path']);
+        return true;
     }
     
     public function setStatusAttribute($value)
