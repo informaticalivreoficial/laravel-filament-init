@@ -96,7 +96,7 @@ class WebController extends Controller
 
     public function artigos()
     {
-        $posts = Post::orderBy('created_at', 'DESC')->where('tipo', '=', 'artigo')->postson()->paginate(2);
+        $posts = Post::orderBy('created_at', 'DESC')->where('tipo', '=', 'artigo')->postson()->paginate(20);
         $head = $this->seo->render('Blog - ' . $this->configService->getConfig()->nomedosite ?? 'Informática Livre',
             'Blog - ' . $this->configService->getConfig()->nomedosite,
             route('web.blog.artigos'),
@@ -112,28 +112,15 @@ class WebController extends Controller
     {
         $post = Post::where('slug', $request->slug)->postson()->first();
         
-        $categorias = CatPost::orderBy('titulo', 'ASC')
-            ->where('tipo', 'artigo')
-            ->get();
         $postsMais = Post::orderBy('views', 'DESC')
             ->where('id', '!=', $post->id)
             ->where('tipo', 'artigo')
             ->limit(4)
             ->postson()
-            ->get();
-        $postsTags = Post::orderBy('views', 'DESC')
-            ->where('tipo', 'artigo')
-            ->where('tags', '!=', '')
-            ->where('id', '!=', $post->id)
-            ->postson()
-            ->limit(11)
-            ->get();
+            ->get();        
         
         $post->views = $post->views + 1;
         $post->save();
-
-        $postnext = Post::where('id', '>', $post->id)->where('tipo', 'artigo')->postson()->first();
-        $postprev = Post::where('id', '<', $post->id)->where('tipo', 'artigo')->postson()->first();
 
         $head = $this->seo->render($post->titulo ?? 'Informática Livre',
             $post->titulo,
@@ -144,11 +131,7 @@ class WebController extends Controller
         return view('web.'.$this->configService->getConfig()->template.'.blog.artigo', [
             'head' => $head,
             'post' => $post,
-            'postsMais' => $postsMais,
-            'postsTags' => $postsTags,
-            'categorias' => $categorias,
-            'postnext' => $postnext,
-            'postprev' => $postprev
+            'postsMais' => $postsMais
         ]);
     }    
 
@@ -229,7 +212,7 @@ class WebController extends Controller
     public function acomodacoes()
     {
         $acomodacoes = Apartamento::available()->get();
-        $head = $this->seo->render('Acomodações - ' . $this->configService->getConfig()->nomedosite,
+        $head = $this->seo->render('Apartamentos - ' . $this->configService->getConfig()->nomedosite,
             $this->configService->getConfig()->descricao ?? 'Informática Livre desenvolvimento de sistemas web desde 2005',
             route('web.acomodacoes'),
             $this->configService->getConfig()->getMetaImg() ?? 'https://informaticalivre.com/media/metaimg.jpg'

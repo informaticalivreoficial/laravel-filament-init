@@ -1,27 +1,114 @@
 @extends("web.{$configuracoes->template}.master.master")
 
 @section('content')
-    <section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{url('frontend/'.$configuracoes->template.'/assets/images/header.jpg')}})">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="breadcrumb-wrap text-center">
-                        <div class="breadcrumb-title">
-                            <h2>Acomodações</h2>    
-                            <div class="breadcrumb-wrap">                  
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{route('web.home')}}">Início</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Acomodações</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>            
+
+<section class="breadcrumb-area overlay-dark-2 bg-3" style="background-image:url({{url('frontend/'.$configuracoes->template.'/assets/images/header.jpg')}})">	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="breadcrumb-text text-center">
+					<h2>Apartamentos</h2>
+					<p>&nbsp;</p>
+					<div class="breadcrumb-bar">
+						<ul class="breadcrumb">
+							<li><a href="{{route('web.home')}}">Início</a></li>
+							<li>Apartamentos</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="room-area pt-90">
+    <?php
+       $pag = (empty($_GET['pag']) ? '1' : $_GET['pag']);
+       $maximo = 12;
+       $inicio = ($pag * $maximo) - $maximo;
+	   $readApartamentos = read('apartamentos',"WHERE status = '1' ORDER BY data DESC LIMIT $inicio,$maximo");
+       foreach($readApartamentos as $apartamentos1);
+       if(!$apartamentos1):
+    ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="section-title text-center">
+                    <div class="alert alert-info">Desculpe, não encontramos Apartamentos Cadastrados</div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>       
+    <?php   
+       else:
+    ?>
+    <div class="container">
+    <div class="row">
+    <div class="col-md-12">
+    <?php    
+       foreach($readApartamentos as $apartamentos):
+       extract($apartamentos); 
+    ?>
+    <div class="room-list">
+        <div class="row">
+            <div class="col-md-5 col-sm-6">
+                <?php
+                   if($img == ''):
+                        echo '<a href="'.BASE.'/pagina/apartamento/'.$url.'"><img src="'.BASE.'/tim.php?src='.PATCH.'/images/image.jpg&w=470&h=340&q=100&zc=1" alt="'.$apart_nome.'"/></a>';
+                   else:
+                        echo '<a href="'.BASE.'/pagina/apartamento/'.$url.'"><img src="'.BASE.'/tim.php?src='.BASE.'/uploads/apartamentos/capas/'.$img.'&w=470&h=340&q=100&zc=1" alt="'.$apart_nome.'"/></a>';
+                   endif;
+                ?>
+            </div>
+            <div class="col-md-7 col-sm-6">
+                <div class="room-list-text">
+                    <h3><a href="<?= BASE.'/pagina/apartamento/'.$url;?>"><?= $apart_nome;?></a></h3>
+                    <p style="min-height: 75px;"><?= lmWord($descricao,300);?></p>
+                    <h4>Disponível no apartamento</h4>
+                    <div class="room-service">
+                        <?php
+                       $checkExplode = $acessorios;            
+                       $checkAcessorios = explode(',',$checkExplode);
+                       
+                       echo '<p>';
+                       foreach($checkAcessorios as $acessorio):                       
+                          $readAcessorios = read('apart_acessorio',"WHERE id = '$acessorio'");  
+                          if($readAcessorios){                                
+                            foreach($readAcessorios as $ass):                                    
+                            echo ' '.$ass['ass_nome'].',';
+                            endforeach;
+                          }                                                                                                                         
+                        endforeach;
+                        echo '</p>';
+                    ?>
+                        <a href="<?= BASE.'/pagina/apartamento/'.$url;?>"><div class="p-amount">
+                            <span>Ver +</span>
+                            <span class="count">&nbsp;</span>
+                        </div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php   
+       endforeach;
+    ?>
+    </div>
+        <div class="col-md-12 fix" style="margin-top: 20px;margin-bottom: 30px;">
+            <div class="pagination-content text-center">
+                <ul class="pagination">
+                    <?php
+                      $link = BASE.'/pagina/apartamentos&pag=';
+                      readPaginatorSite('apartamentos',"WHERE status = '1' ORDER BY data DESC", $maximo, $link, $pag);
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div> 
+    <?php    
+       endif;
+    ?>   
 
     <section id="services" class="services-area pt-120 pb-90">  
         <div class="container">        

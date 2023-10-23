@@ -2,117 +2,150 @@
 
 @section('content')
 
-<section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{url('frontend/'.$configuracoes->template.'/assets/images/header.jpg')}})">
+<section class="breadcrumb-area overlay-dark-2 bg-3" style="background-image: url({{$configuracoes->gettopodosite()}});">	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="breadcrumb-text text-center">
+					<h2>{{$post->titulo}}</h2>
+					<p>&nbsp;</p>
+					<div class="breadcrumb-bar">
+						<ul class="breadcrumb">
+							<li><a href="{{route('web.blog.artigos')}}">Artigos</a></li>
+							<li>{{$post->titulo}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="room-details pt-90">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-xl-12 col-lg-12">
-                <div class="breadcrumb-wrap text-center">
-                    <div class="breadcrumb-title">
-                        <h2>{{$post->titulo}}</h2>    
-                        <div class="breadcrumb-wrap">                  
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{route('web.home')}}">Início</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">{{$post->titulo}}</li>
-                                </ol>
-                            </nav>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="room-slider-wrapper">
+                    <div class="room-slider">
+                        <div class="slider-image">
+                            <img src="{{$post->cover()}}" alt="{{$post->titulo}}"/>
+                            @if ($post->thumb_legenda)
+                                <p>{{$post->thumb_legenda}}</p>
+                            @endif
+                            <!-- Social list -->
+                            <div class="shareIcons"></div>                           
                         </div>
-                    </div>
+                    </div>                    
                 </div>
+                <div class="room-details-text">
+                    <h3 class="room-details-title">{{$post->titulo}}</h3>
+                    {!!$post->content!!}
+                </div> 
             </div>            
         </div>
+        @if($post->images()->get()->count()) 
+            <div class="row gallery">
+                @foreach($post->images()->get() as $key => $image)        
+                <div class="col-md-4 col-sm-6 col-xs-12 image"> 
+                    <a class="image-popup" href="{{ $image->url_image }}" title="{{$post->titulo}}">
+                        <img src="{{ $image->url_image }}" alt="{{$post->titulo}}"> 
+                    </a>
+                </div>            
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>
 
-    <!-- inner-blog -->
-    <section class="inner-blog b-details-p pt-30 pb-30">
+@if (!empty($postsMais) && $postsMais->count() > 0)
+    <section class="blog-area" style="margin-top: 60px;margin-bottom: 40px;">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="blog-details-wrap">
-                        <div class="details__content pb-30">
-                            <h2>{{$post->titulo}}</h2>
-                            <div class="meta-info">
-                                <ul>
-                                    <li><i class="fal fa-eye"></i> {{$post->views}} Visualizações  </li>
-                                    <li><i class="fal fa-calendar-alt"></i> {{ Carbon\Carbon::parse($post->created_at)->format('d/m/Y') }}</li>
-                                </ul>
-                            </div>
-                            {!!$post->content!!}   
-                            
-                            @if($post->images()->get()->count())                                                
-                                @foreach($post->images()->get() as $image)  
-                                    <figure class="d-inline-flex">
-                                        <a class="popup-image" href="{{ $image->url_image }}">
-                                            <img height="161" src="{{ $image->url_cropped }}"  alt="{{ $post->titulo }}"/>
-                                        </a>
-                                    </figure>                                             
-                                @endforeach                                                             
-                            @endif
-                        </div>
-                        
-                        <div class="posts_navigation pt-35 pb-35">
-                            <div class="row align-items-center">
-                                @if(!empty($postprev) && $postprev->count() > 0)
-                                    <div class="col-xl-4 col-md-5">
-                                        <div class="prev-link">
-                                            <span>Anterior</span>
-                                            <h4><a href="{{route(($postprev->tipo == 'artigo' ? 'web.blog.artigo' : 'web.noticia'), ['slug' => $postprev->slug] )}}">{{$postprev->titulo}}</a></h4>
-                                        </div>
+                <div class="col-md-8 col-md-offset-2">
+                <div class="section-title text-center">
+                <h3>Veja Também</h3>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="blog-carousel">
+                    @foreach ($postsMais as $postmais)    
+                        <div class="col-xs-12">
+                            <div class="single-blog-wrapper">
+                                <div class="single-blog">
+                                    <div class="blog-image">
+                                        <img width="370" height="212" src="{{$postmais->cover()}}" alt="{{$postmais->titulo}}"/>
                                     </div>
-                                @endif
-                                <div class="col-xl-4 col-md-2 text-left text-md-center">
-                                    <a href="{{route('web.blog.artigos')}}" class="blog-filter">
-                                        <img src="{{url('frontend/'.$configuracoes->template.'/assets/images/c_d01.png')}}" alt="Artigos">
-                                    </a>
-                                </div>
-                                @if(!empty($postnext) && $postnext->count() > 0)
-                                    <div class="col-xl-4 col-md-5">
-                                        <div class="next-link text-left text-md-right">
-                                            <span>Próximo</span>
-                                            <h4><a href="{{route(($postnext->tipo == 'artigo' ? 'web.blog.artigo' : 'web.noticia'), ['slug' => $postnext->slug] )}}">{{$postnext->titulo}}</a></h4>
-                                        </div>
+                                    <div class="blog-text">
+                                        <h3>{{$postmais->titulo}}</h3>
                                     </div>
-                                @endif
-                            </div>
-                        </div>
-                        @if (!empty($postsMais) && $postsMais->count() > 0)
-                            <div class="related__post mt-45 mb-85">
-                                <div class="post-title">
-                                    <h4>Veja Também</h4>
                                 </div>
-                                <div class="row">
-                                    @foreach ($postsMais as $postmais)
-                                        <div class="col-md-6">
-                                            <div class="related-post-wrap mb-30">
-                                                <div class="post-thumb">
-                                                    <img src="{{$postmais->cover()}}" alt="{{$postmais->titulo}}">
-                                                </div>
-                                                <div class="rp__content">
-                                                    <h3><a href="{{route(($postmais->tipo == 'artigo' ? 'web.blog.artigo' : 'web.noticia'), ['slug' => $postmais->slug] )}}">{{$postmais->titulo}}</a></h3>
-                                                    {!!\App\Helpers\Renato::Words($postmais->content, 15)!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach                                    
+                                <div class="blog-hover">
+                                    <h3>
+                                        <a href="{{route(($postmais->tipo == 'artigo' ? 'web.blog.artigo' : 'web.noticia'), ['slug' => $postmais->slug] )}}" title="{{$postmais->titulo}}">{{$postmais->titulo}}</a>
+                                    </h3>
+                                    {!!\App\Helpers\Renato::Words($postmais->content, 15)!!}
+                                    <a href="{{route(($postmais->tipo == 'artigo' ? 'web.blog.artigo' : 'web.noticia'), ['slug' => $postmais->slug] )}}" class="default-btn">Leia mais</a>
                                 </div>
                             </div>
-                        @endif
-                    </div>
-                </div>                
+                        </div>        
+                @endforeach
+                </div>
             </div>
         </div>
     </section>
+@endif    
+
 @endsection
 
 @section('css')
+    <link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials.css')}}">
+    <link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials-theme-flat.css')}}">
     <style>
-        .details__content figure {
-            margin-top: 10px;
-            margin-bottom: 10px;
+        .gallery {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
         }
-        .details__content figure img {
-            margin-right: 10px;
+        .image {
+            margin: 10px;
+            width: calc(33.33% - 20px);
+            overflow: hidden;
+        }
+        .image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s;
+        }
+        .image:hover img {
+            transform: scale(1.1);
+        }
+        @media screen and (max-width: 768px) {
+            .image {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .image {
+                width: 100%;
+            }
         }
     </style>
+@endsection
+
+@section('js')
+    <script src="{{url('frontend/'.$configuracoes->template.'/assets/js/jsSocials/jssocials.min.js')}}"></script>
+    <script>
+        $(function () {    
+            $('.shareIcons').jsSocials({
+                //url: "http://www.google.com",
+                showLabel: false,
+                showCount: false,
+                shareIn: "popup",
+                shares: ["email", "twitter", "facebook", "whatsapp"]
+            });    
+        });
+    </script>
 @endsection

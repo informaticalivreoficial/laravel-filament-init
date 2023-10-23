@@ -46,14 +46,12 @@
                     @endforeach
                 
                     <div class="col-md-12 fix" style="margin-top: 20px;margin-bottom: 30px;">
-                        <div class="pagination-content text-center">
-                            <ul class="pagination">
-                                @if (isset($filters))
-                                    {{ $posts->appends($filters)->links() }}
-                                @else
-                                    {{ $posts->links() }}
-                                @endif
-                            </ul>
+                        <div class="pagination-content text-center">                            
+                            @if (isset($filters))
+                                {{ $posts->appends($filters)->links() }}
+                            @else
+                                {{ $posts->links() }}
+                            @endif                            
                         </div>
                     </div>
                 </div>
@@ -74,7 +72,35 @@
 @endsection
 
 @section('css')
-    
+    <style>
+        .pagination-custom{
+            margin: 0;
+            display: -ms-flexbox;
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: 0.25rem;
+        }
+        .pagination-custom li a {
+            border-radius: 30px;
+            margin-right: 8px;
+            color:#7c7c7c;
+            border: 1px solid #ddd;
+            position: relative;
+            float: left;
+            padding: 6px 12px;
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            line-height: 25px;
+            font-weight: 600;
+        }
+        .pagination-custom>.active>a, .pagination-custom>.active>a:hover, .pagination-custom>li>a:hover {
+            color: #fff;
+            background: #FF6600;
+            border: 1px solid transparent;
+        }
+    </style>
 @endsection
 
 @section('js')
