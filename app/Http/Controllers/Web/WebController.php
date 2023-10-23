@@ -96,7 +96,7 @@ class WebController extends Controller
 
     public function artigos()
     {
-        $posts = Post::orderBy('created_at', 'DESC')->where('tipo', '=', 'artigo')->postson()->paginate(10);
+        $posts = Post::orderBy('created_at', 'DESC')->where('tipo', '=', 'artigo')->postson()->paginate(2);
         $head = $this->seo->render('Blog - ' . $this->configService->getConfig()->nomedosite ?? 'Informática Livre',
             'Blog - ' . $this->configService->getConfig()->nomedosite,
             route('web.blog.artigos'),
