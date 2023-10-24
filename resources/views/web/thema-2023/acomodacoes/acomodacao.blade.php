@@ -1,182 +1,168 @@
 @extends("web.{$configuracoes->template}.master.master")
 
 @section('content')
- 
-<section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{url('frontend/'.$configuracoes->template.'/assets/images/header.jpg')}})">
+
+<section class="breadcrumb-area overlay-dark-2 bg-3" style="background-image: url({{$configuracoes->gettopodosite()}});">	
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-xl-12 col-lg-12">
-                <div class="breadcrumb-wrap text-center">
-                    <div class="breadcrumb-title">
-                        <h2>{{$acomodacao->titulo}}</h2>    
-                        <div class="breadcrumb-wrap">                  
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{route('web.home')}}">Início</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">{{$acomodacao->titulo}}</li>
-                                </ol>
-                            </nav>
-                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb-text text-center">
+                    <h2>{{$acomodacao->titulo}}</h2>
+                    <p>&nbsp;</p>
+                    <div class="breadcrumb-bar">
+                        <ul class="breadcrumb">
+                            <li><a href="{{route('web.acomodacoes')}}">Apartamentos</a></li>
+                            <li>{{$acomodacao->titulo}}</li>
+                        </ul>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </section>
+ 
 
-<div class="about-area5 about-p p-relative">
-    <div class="container pt-120 pb-40">
-        <div class="row">         
-            <div class="col-sm-12 col-md-12 col-lg-4 order-2">
-                <aside class="sidebar services-sidebar">            
-                    <!-- Category Widget -->
-                    <div class="sidebar-widget categories">
-                        <div class="widget-content">
-                            <h2 class="widget-title"> Reservar  </h2>
-                            <!-- Services Category -->
-                            <!-- booking-area -->
-                            <div class="booking">
-                                <div class="contact-bg"> 
-                                    <form action="{{route('web.reservar')}}" method="post" class="contact-form mt-30" autocomplete="off">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="contact-field p-relative c-name mb-20">                                    
-                                                    <label><i class="fal fa-badge-check"></i> Check In</label>
-                                                    <input type="date" id="chackin" name="checkini">
-                                                </div>                               
-                                            </div>
-
-                                            <div class="col-lg-12">                               
-                                                <div class="contact-field p-relative c-subject mb-20">                                   
-                                                    <label><i class="fal fa-times-octagon"></i> Check Out</label>
-                                                    <input type="date" id="chackout" name="checkouti">
-                                                </div>
-                                            </div>		
-                                            <div class="col-lg-12">                               
-                                                <div class="contact-field p-relative c-subject mb-20">                                   
-                                                    <label><i class="fal fa-users"></i> Adultos</label>
-                                                    <select name="adultos" id="adu">
-                                                        <option value="0">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                    </select>
-                                                </div>
-                                            </div>	
-                                            <div class="col-lg-12">                               
-                                                <div class="contact-field p-relative c-subject mb-20">                                   
-                                                    <label><i class="fal fa-users"></i> Crianças 0 a 5</label>
-                                                    <select name="cri_0_5" id="adu">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="slider-btn mt-15">    
-                                                    <input class="noclear" type="hidden" name="apart_id" value="{{$acomodacao->id}}" />                                      
-                                                    <button class="btn ss-btn" data-animation="fadeInRight" data-delay=".8s"><span>Fazer Pré-Reserva</span></button>				
-                                                </div>                             
-                                            </div>
-                                        </div>
-                                    </form>                            
-                                </div>  
-                            </div>
-                            <!-- booking-area-end -->	
-                        </div>
-                    </div>                    
-                </aside>
-            </div>
-           
-            
-            <div class="col-lg-8 col-md-12 col-sm-12 order-1">
-                <div class="service-detail">
-                
-                    <div class="two-column">
-                        <div class="row">
-                            <div class="image-column col-xl-12 col-lg-12 col-md-12">
-                                <figure class="image"><img src="{{$acomodacao->cover()}}" alt="{{$acomodacao->titulo}}"></figure>
-                            </div>
+<section class="room-details pt-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-8">
+                <div class="room-slider-wrapper">
+                    <div class="room-slider">
+                        @if($acomodacao->images()->get()->count())
+                            @foreach($acomodacao->images()->get() as $image)
+                                <div class="slider-image">
+                                    <img height="500" src="{{ $image->url_image }}" alt="{{$acomodacao->titulo}}"/>
+                                </div>
+                            @endforeach
+                        @endif                     
+                    </div>
+                    <div class="row nav-row">
+                        <div class="slider-nav">
+                            @if($acomodacao->images()->get()->count())
+                                @foreach($acomodacao->images()->get() as $image)
+                                    <div class="nav-image">
+                                        <img width="201" height="151" src="{{ $image->url_image }}" alt="{{$acomodacao->titulo}}"/>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
+                </div>
+                <div class="room-details-text">
+                    <h3 class="room-details-title">Descrição</h3>
+                    {!!$acomodacao->descricao!!} 
 
-                    <div class="content-box">
-                        <div class="row align-items-center mb-50">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="price">
-                                    <h2>{{$acomodacao->titulo}}</h2>
-                                    @if ($acomodacao->exibir_valores == 1)
-                                        <span>R$ {{$acomodacao->valor_cafe}}</span>
-                                    @endif
-                                </div>
-                            </div>                        
-                        </div>
-                        
-                        {!!$acomodacao->descricao!!} 
-                        <ul class="room-features d-flex align-items-center">
-                            @if (!empty($acomodacao->ar_condicionado))
-                                <li>Ar Condicionado</li>
-                            @endif
-                            @if (!empty($acomodacao->cafe_manha))
-                                <li>Café da manhã</li>
-                            @endif
-                            @if (!empty($acomodacao->telefone))
-                                <li>Telefone</li>
-                            @endif
-                            @if (!empty($acomodacao->estacionamento))
-                                <li>Estacionamento</li>
-                            @endif
-                            @if (!empty($acomodacao->servico_quarto))
-                                <li>Serviço de Quarto</li>
-                            @endif
-                            @if (!empty($acomodacao->frigobar))
-                                <li>Frigobar</li>
-                            @endif
-                            @if (!empty($acomodacao->elevador))
-                                <li>Elevador</li>
-                            @endif
-                            @if (!empty($acomodacao->vista_para_mar))
-                                <li>Vista para o Mar</li>
-                            @endif
-                            @if (!empty($acomodacao->ventilador_teto))
-                                <li>Ventilador de Teto</li>
-                            @endif
-                            @if (!empty($acomodacao->cofre_individual))
-                                <li>Cofre Individual</li>
-                            @endif
-                            @if (!empty($acomodacao->espaco_fitness))
-                                <li>Espaço Fitness</li>
-                            @endif
-                            @if (!empty($acomodacao->wifi))
-                                <li>Wifi</li>
-                            @endif
-                            @if (!empty($acomodacao->lareira))
-                                <li>Lareira</li>
-                            @endif
-                        </ul>
-                        @if ($acomodacao->notasadicionais)
-                            <p>{{$acomodacao->notasadicionais}}</p>
-                        @endif                    
+                    @if ($acomodacao->notasadicionais)
+                        <p>{{$acomodacao->notasadicionais}}</p>
+                    @endif 
+                </div>
+                    
+                <div class="room-facilities"> 
+                    <div class="single-facility">
+                        <span><i class="zmdi zmdi-check"></i> vvvvvvvv</span>
                     </div>
                 </div>
             </div>
-         
+            
+            <!-- SIDEBAR -->
+            <div class="col-lg-3 col-md-4">
+                <div class="sidebar-widget">
+                    <h3 class="room-details-title">Pré-reservar</h3>
+                    <form action="{{route('web.reservar')}}" method="post" class="search-form" autocomplete="off">
+                        @csrf
+                        <div class="form-container fix">
+                            <div class="box-select">
+                                <div class="select date">
+                                    <input class="j_data" type="text" name="checkini" autocomplete="off" placeholder="Checkin" />
+                                </div>
+                                <div class="select date">
+                                    <input type="text" class="j_data" name="checkouti" autocomplete="off" placeholder="Checkout" />
+                                </div>
+                                <div class="select arrow">
+                                    <select name="adultos" id="adu" title="Adultos">
+                                        <option value="">Adultos</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <div class="select arrow">
+                                    <select name="cri_0_5" id="adu" title="Crianças de 0 a 5 anos">
+                                        <option value="">Crianças de 0 a 5 anos</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="search default-btn" name="SendReserva">Enviar Agora</button>
+                        </div>
+                    </form> 
+                </div>
+                            
+            </div>
         </div>
     </div>
-</div>
+    
+    @if (!empty($acomodacoes) && $acomodacoes->count() > 0)
+        <div class="room-area">
+            <div class="container-fluid">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="room-details-title">Veja Também</h3>
+                        </div>
+                    </div>
+                </div>
+                @foreach($acomodacoes as $apart)    
+                    <div class="single-room">
+                        <img style="min-height: 338px;max-height: 338px;max-width:480px;" src="{{$apart->cover()}}" alt="{{$apart->titulo}}"/>
+                        <div class="room-hover text-center">
+                            <div class="hover-text">
+                                <h3><a href="{{route('web.acomodacao', ['slug' => $apart->slug])}}">{{$apart->titulo}}</a></h3>
+                                <p>&nbsp;</p>
+                                <div class="room-btn">
+                                    <a href="{{route('web.acomodacao', ['slug' => $apart->slug])}}" class="default-btn">Ver Detalhes</a>
+                                </div>
+                            </div>                
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>    
+    @endif 
+</section>
 
 @endsection
 
 @section('css')
-
+    <link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/bootstrap-datepicker3.min.css')}}"/>
 @endsection
 
 @section('js')
-
+    <script src="{{url('frontend/'.$configuracoes->template.'/assets/js/datepicker/bootstrap-datepicker.js')}}"></script>
+    <script>
+        $(function () {    
+            // CHECKIN
+            $( ".j_data" ).datepicker({
+            //beforeShowDay: DisableMonday,// chama função data 
+            //beforeShowDay: unavailable,// chama função dia da semana
+            dateFormat: 'dd/mm/yy',
+            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+            dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+            nextText: 'Próximo',
+            prevText: 'Anterior',
+            showOn: 'focus',    
+            buttonImageOnly: true,
+            //buttonImage: '<?php //echo PATCH;?>/img/data.png'
+            });    
+        });
+    </script>
 @endsection

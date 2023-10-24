@@ -244,15 +244,14 @@ class WebController extends Controller
             'dadosForm' => $dadosForm,
             'acomodacoes' => $acomodacoes,
             'paginareserva' => $paginareserva,
-            'politicareserva' => $politicareserva,
-            'estados' => $this->estadoService->getEstados()
+            'politicareserva' => $politicareserva
         ]);
     }
 
     public function acomodacao($slug)
     {
         $acomodacao = Apartamento::where('slug', $slug)->available()->first();
-        $acomodacoes = Apartamento::where('id', '!=', $acomodacao->id)->available()->get();
+        $acomodacoes = Apartamento::where('id', '!=', $acomodacao->id)->available()->limit(4)->get();
 
         $acomodacao->views = $acomodacao->views + 1;
         $acomodacao->save();
