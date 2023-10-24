@@ -149,11 +149,11 @@
                         </div>
                         <div class="col-md-3">
                             <label title="Check In">Check In<span style="color:#FF0000;">*</span></label>
-                            <input type="date" id="chackin" name="checkin" value="{{(!empty($dadosForm['checkini']) ? $dadosForm['checkini'] : '')}}" />
+                            <input class="j_data" type="date" name="checkin" value="{{(!empty($dadosForm['checkini']) ? $dadosForm['checkini'] : '')}}" />
                         </div>
                         <div class="col-md-3">
                             <label title="Check Out">Check Out<span style="color:#FF0000;">*</span></label>
-                            <input type="date" id="chackout" name="checkout" value="{{(!empty($dadosForm['checkouti']) ? $dadosForm['checkouti'] : '')}}" />
+                            <input class="j_data" type="date" name="checkout" value="{{(!empty($dadosForm['checkouti']) ? $dadosForm['checkouti'] : '')}}" />
                         </div>                                
                     </div>
                     
@@ -175,29 +175,19 @@
 <div class="modal fade" id="politicas">
 	<div class="modal-dialog">
 		<div class="modal-content">	
-            <?php
-	           $readPoliticas = read('posts',"WHERE tipo = 'pagina' AND status = '1' AND id = '155'");
-               foreach($readPoliticas as $politica);
-               if($politica):
-            ?>
-            <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title"><strong><?= $politica['titulo'];?></strong></h4>
-			</div>              
-            <div class="modal-body">
-            
-            <div class="row">  			   
-                <div class="col-md-12 form-group"> 
-                    <?= $politica['content'];?>                                    
+            @if (!empty($politicareserva))
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><strong>{{$politicareserva->titulo}}</strong></h4>
+                </div>              
+                <div class="modal-body">            
+                    <div class="row">  			   
+                        <div class="col-md-12 form-group"> 
+                            {!!$politicareserva->content!!}                                    
+                        </div>
+                    </div>            
                 </div>
-            </div>
-            
-            </div>
-    		
-            <?php   
-               endif;
-            ?>		
-			
+            @endif
 	    </div>
     </div>
 </div>
@@ -205,10 +195,11 @@
 @endsection
 
 @section('css')
-    
+<link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/bootstrap-datepicker3.min.css')}}"/>
 @endsection
 
 @section('js')
+<script src="{{url('frontend/'.$configuracoes->template.'/assets/js/datepicker/bootstrap-datepicker.js')}}"></script>
 <script src="{{url(asset('backend/assets/js/jquery.mask.js'))}}"></script>
 <script>
     $(document).ready(function () { 
@@ -338,5 +329,23 @@
         });
     });
 
+</script>
+<script>
+    $(function () {    
+        // CHECKIN
+        $( ".j_data" ).datepicker({
+        dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+        nextText: 'Próximo',
+        prevText: 'Anterior',
+        showOn: 'focus',    
+        buttonImageOnly: true,
+        todayHighlight:true,
+        });    
+    });
 </script>
 @endsection
