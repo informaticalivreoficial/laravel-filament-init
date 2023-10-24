@@ -99,6 +99,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <input class="noclear" type="hidden" name="apart_id" value="{{$acomodacao->id}}" />
                             <button type="submit" class="search default-btn" name="SendReserva">Enviar Agora</button>
                         </div>
                     </form> 

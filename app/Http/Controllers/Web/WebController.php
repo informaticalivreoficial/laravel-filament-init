@@ -227,11 +227,8 @@ class WebController extends Controller
     {
         $dadosForm = $request->all();
         $acomodacoes = Apartamento::available()->get();
-
-        $paginareserva = Post::where('id', 15)->first();
-        $politicareserva = Post::where('id', 14)->first();
-        $paginareserva->views = $paginareserva->views + 1;
-        $paginareserva->save();
+        
+        $politicareserva = Post::where('id', 14)->first();        
 
         $head = $this->seo->render('Pré-reserva - ' . $this->configService->getConfig()->nomedosite,
             'Pré-reserva - ' . $this->configService->getConfig()->nomedosite,
@@ -243,7 +240,6 @@ class WebController extends Controller
             'head' => $head,
             'dadosForm' => $dadosForm,
             'acomodacoes' => $acomodacoes,
-            'paginareserva' => $paginareserva,
             'politicareserva' => $politicareserva
         ]);
     }
