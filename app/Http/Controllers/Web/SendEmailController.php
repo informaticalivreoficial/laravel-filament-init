@@ -101,10 +101,10 @@ class SendEmailController extends Controller
     }
 
     public function acomodacaoSend(Request $request)
-    {        
+    {   
         $apartamento = Apartamento::where('id', $request->apart_id)->first();
 
-        if($request->tipo_reserva == 1){
+        if($request->tipo_reserva == 2){
             if($request->empresa_nome == ''){
                 $json = "Por favor preencha o campo <strong>Nome da Empresa</strong>";
                 return response()->json(['error' => $json]);
@@ -119,7 +119,7 @@ class SendEmailController extends Controller
             }
         }
 
-        if($request->nome == ''){
+        if($request->cliente_nome == ''){
             $json = "Por favor preencha o campo <strong>Nome</strong>";
             return response()->json(['error' => $json]);
         }
@@ -146,8 +146,8 @@ class SendEmailController extends Controller
             return response()->json(['error' => $json]);
         }
         
-        if($request->telefone_cliente == ''){
-            $json = "Por favor preencha o campo <strong>Telefone</strong>";
+        if($request->whatsapp == ''){
+            $json = "Por favor preencha o campo <strong>WhatsApp</strong>";
             return response()->json(['error' => $json]);
         }
 
@@ -171,12 +171,12 @@ class SendEmailController extends Controller
             return response()->json(['error' => $json]);
         }
         
-        if(Carbon::createFromFormat('Y-m-d', $request->checkin)->lt(Carbon::parse(now())->format('Y-m-d'))){
+        if(Carbon::createFromFormat('d/m/Y', $request->checkin)->lt(Carbon::parse(now())->format('Y-m-d'))){
             $json = "Você selecionou uma <strong>Data do Check In</strong> inválida!";
             return response()->json(['error' => $json]);
         }
-
-        if(Carbon::createFromFormat('Y-m-d', $request->checkout)->lt(Carbon::parse(now())->format('Y-m-d'))){
+        
+        if(Carbon::createFromFormat('d/m/Y', $request->checkout)->lt(Carbon::parse(now())->format('Y-m-d'))){
             $json = "Você selecionou uma <strong>Data do Check Out</strong> inválida!";
             return response()->json(['error' => $json]);
         }
@@ -185,7 +185,7 @@ class SendEmailController extends Controller
             'sitename' => $this->configService->getConfig()->nomedosite,
             'siteemail' => env('MAIL_FROM_ADDRESS'),
             //Dados do Cliente
-            'reply_name' => $request->nome,
+            'reply_name' => $request->cliente_nome,
             'reply_email' => $request->email,
             'cpf' => $request->cpf,
             'rg' => $request->rg,
@@ -194,12 +194,11 @@ class SendEmailController extends Controller
             'rua' => $request->rua,
             'bairro' => $request->bairro,
             'num' => $request->num,
-            'telefone' => $request->telefone_cliente,
             'whatsapp' => $request->whatsapp,
-            'estado' => $this->estadoService->getEstado($request->uf)->estado_nome,
-            'cidade' => $this->cidadeService->getCidadeById($request->cidade)->cidade_nome,
+            'estado' => $request->uf,
+            'cidade' => $request->cidade,
             //Dados da reserva
-            'ocupacao' => ($request->ocupacao == 1 ? 'Com Café da manhã' : 'Sem Café da manhã'),
+            //'ocupacao' => ($request->ocupacao == 1 ? 'Com Café da manhã' : 'Sem Café da manhã'),
             'checkin' => $request->checkin,
             'checkout' => $request->checkout,
             'adultos' => $request->num_adultos,
@@ -211,19 +210,18 @@ class SendEmailController extends Controller
         $retorno = [
             'sitename' => $this->configService->getConfig()->nomedosite,
             'siteemail' => env('MAIL_FROM_ADDRESS'),
-            'reply_name' => $request->nome,
+            'reply_name' => $request->cliente_nome,
             'reply_email' => $request->email
         ];
         
         $getEmpresa = Empresa::where('document_company', str_replace(['.', '-', '/', '(', ')', ' '], '', $request->cnpj))->first();
-        if($request->tipo_reserva == 1){                        
+        if($request->tipo_reserva == 2){                        
             if(empty($getEmpresa)){
                 $empresa = [
                     'alias_name' => $request->empresa_nome,
                     'social_name' => $request->empresa_nome,
                     'document_company' => $request->cnpj,
-                    'telefone' => $request->telefone_empresa,
-                    'created_at' => Carbon::now()
+                    'telefone' => $request->telefone_empresa
                 ];
                 $empresaCreate = Empresa::create($empresa);
                 $empresaCreate->save();
@@ -231,11 +229,10 @@ class SendEmailController extends Controller
         }
         
         $user = [
-            'name' => $request->nome,
+            'name' => $request->cliente_nome,
             'email' => $request->email,
             'cpf' => $request->cpf,
             'rg' => $request->rg,
-            'celular' => $request->telefone_cliente,
             'whatsapp' => $request->whatsapp,
             'cep' => $request->cep,
             'rua' => $request->rua,
@@ -247,7 +244,6 @@ class SendEmailController extends Controller
             'password' => bcrypt(Carbon::now()),
             'senha' => Str::random(20),
             'remember_token' => Str::random(20),
-            'created_at' => Carbon::now(),
             'client' => true,
             'status' => 1,
             'notasadicionais' => 'Cliente cadastrado pelo site'
@@ -262,7 +258,7 @@ class SendEmailController extends Controller
         $reserva = [
             'cliente' => (!$getUser ? $userCreate->id : $getUser->id),
             'apartamento' => $apartamento->id,
-            'empresa' => ($request->tipo_reserva == 1 && !empty($getEmpresa) ? $empresaCreate->id : null),
+            'empresa' => ($request->tipo_reserva == 2 && !empty($getEmpresa) ? $empresaCreate->id : null),
             'status' => 1,
             'adultos' => $request->num_adultos,
             'criancas_0_5' => $request->num_cri_0_5,
@@ -271,7 +267,7 @@ class SendEmailController extends Controller
             'checkout' => Carbon::parse($request->checkout)->format('d/m/Y'),
             'notasadicionais' => $data['ocupacao']
         ];
-        
+                
         $reservaCreate = Reservas::create($reserva);
         $reservaCreate->save();
 
