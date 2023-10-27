@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div class="row form_hide">
                         <div class="col-md-2 col-sm-3">
                             <label title="CEP">Preencha o CEP<span style="color:#FF0000;">*</span></label>
                             <input title="CEP" type="text" id="cep" name="cep"/>
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div class="row form_hide">
                         <div class="col-md-4 col-sm-12">
                             <label title="Apartamento">Apartamento<span style="color:#FF0000;">*</span></label>
                             <select title="Apartamento" name="apart_id">
@@ -160,7 +160,7 @@
                         </div>                               
                     </div>
                     
-                    <div class="row"> 
+                    <div class="row form_hide"> 
                         <div class="col-md-8" style="text-align: right;">
                             <p><a href="javascript:;" data-toggle="modal" data-target="#politicas">Política de Reservas</a></p>
                         </div>                               
@@ -168,7 +168,7 @@
                             <button type="submit" style="width: 100%;" id="js-contact-btn" class="default-btn">Enviar Agora</button>
                         </div>                        
                     </div>
-                    <div class="row">
+                    <div class="row form_hide">
                         <div class="col-12" style="padding: 15px;">
                             <p>Obs. *Este formulário não garante a sua reserva, pois é necessário receber o contato da pousada para que seja realizado o procedimento de confirmação por completo.</p>
                         </div>

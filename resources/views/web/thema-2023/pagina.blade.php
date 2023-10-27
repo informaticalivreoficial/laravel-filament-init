@@ -47,12 +47,14 @@
         
         @if($post->images()->get()->count()) 
             <div class="row gallery">
-                @foreach($post->images()->get() as $key => $image)        
-                <div class="col-md-4 col-sm-6 col-xs-12 image"> 
-                    <a class="image-popup" href="{{ $image->url_image }}" title="{{$post->titulo}}">
-                        <img src="{{ $image->url_image }}" alt="{{$post->titulo}}"> 
-                    </a>
-                </div>            
+                @foreach($post->images()->get() as $key => $image)  
+                    @if ($image->cover == null)
+                        <div class="col-md-4 col-sm-6 col-xs-12 image"> 
+                            <a class="image-popup" href="{{ $image->url_image }}" title="{{$post->titulo}}">
+                                <img src="{{ $image->url_image }}" alt="{{$post->titulo}}"> 
+                            </a>
+                        </div>
+                    @endif 
                 @endforeach
             </div>
         @endif        

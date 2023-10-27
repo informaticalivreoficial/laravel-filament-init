@@ -1,37 +1,35 @@
 @extends("web.{$configuracoes->template}.master.master")
 
 @section('content')
-<section class="breadcrumb-area d-flex align-items-center" style="background-image:url({{url('frontend/'.$configuracoes->template.'/assets/images/header.jpg')}})">
+
+<section class="breadcrumb-area overlay-dark-2 bg-3" style="background-image: url({{$configuracoes->gettopodosite()}});">	
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-xl-12 col-lg-12">
-                <div class="breadcrumb-wrap text-center">
-                    <div class="breadcrumb-title">
-                        <h2>Política de Privacidade</h2>    
-                        <div class="breadcrumb-wrap">                  
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{route('web.home')}}">Início</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Política de Privacidade</li>
-                                </ol>
-                            </nav>
-                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb-text text-center">
+                    <h2>Política de Privacidade</h2>
+                    <p>&nbsp;</p>
+                    <div class="breadcrumb-bar">
+                        <ul class="breadcrumb">
+                            <li><a href="{{route('web.home')}}">Início</a></li>
+                            <li>Política de Privacidade</li>
+                        </ul>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </section>
 
-<section class="about-area about-p pt-120 pb-120 p-relative fix">
+<section class="room-details pt-30">
     <div class="container">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-12">
-                <div class="about-content s-about-content  wow fadeInRight  animated pl-30" data-animation="fadeInRight" data-delay=".4s">
-                    {!! $configuracoes->politicas_de_privacidade !!}                                                           
+        <div class="row">
+            <div class="col-lg-12 col-md-12">                
+                <div class="room-details-text" style="padding-top: 10px;">                    
+                    {!! $configuracoes->politicas_de_privacidade !!} 
                 </div>
-            </div>         
-        </div>
+            </div>            
+        </div>        
     </div>
 </section>
 

@@ -133,42 +133,7 @@ class WebController extends Controller
             'post' => $post,
             'postsMais' => $postsMais
         ]);
-    }    
-
-    public function pesquisa(Request $request)
-    {
-        $search = $request->only('search');
-
-        $paginas = Post::where(function($query) use ($request){
-            if($request->search){
-                $query->orWhere('titulo', 'LIKE', "%{$request->search}%")
-                    ->where('tipo', 'pagina')->postson();
-                $query->orWhere('content', 'LIKE', "%{$request->search}%")
-                    ->where('tipo', 'pagina')->postson();
-            }
-        })->postson()->limit(10)->get();
-
-        $artigos = Post::where(function($query) use ($request){
-            if($request->search){
-                $query->orWhere('titulo', 'LIKE', "%{$request->search}%")
-                    ->where('tipo', 'artigo')->postson();
-                $query->orWhere('content', 'LIKE', "%{$request->search}%")
-                    ->where('tipo', 'artigo')->postson();
-            }
-        })->postson()->limit(10)->get();
-        
-        $head = $this->seo->render('Pesquisa por ' . $request->search ?? 'Informática Livre',
-            'Pesquisa - ' . $this->configService->getConfig()->nomedosite,
-            route('web.blog.artigos'),
-            $this->configService->getConfig()->getMetaImg() ?? 'https://informaticalivre.com/media/metaimg.jpg'
-        );
-        
-        return view('web.'.$this->configService->getConfig()->template.'.pesquisa',[
-            'head' => $head,
-            'paginas' => $paginas,
-            'artigos' => $artigos
-        ]);
-    }
+    }   
 
     public function pagina($slug)
     {
@@ -318,11 +283,5 @@ class WebController extends Controller
             'head' => $head
         ]);
     }
- 
-    public function zapchat(Request $request)
-    {
-        $textoZap = $request->texto;
-        $link = \App\Helpers\WhatsApp::getNumZap($this->configService->getConfig()->whatsapp, $textoZap);
-        return redirect($link);
-    }
+    
 }

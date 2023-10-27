@@ -58,13 +58,12 @@
             <br />
             <strong>E-mail: </strong><strong style="color:#09F;">{{ $email }}</strong>
             <br />
-            <strong>Telefone: </strong><strong style="color:#09F;">{{ $telefone }}</strong>
+            <strong>WhatsApp: </strong><strong style="color:#09F;">{{ $whatsapp }}</strong>
             <br />       
             <strong>Cidade: </strong><strong style="color:#09F;">{{ $cidade }}/{{ $estado }}</strong> 
             <br />
             <strong>Observações: </strong> 
             </p>   
-            <p style="padding-left:10px;font:20px Trebuchet MS, Arial, Helvetica, sans-serif; color:#09F;">@php echo nl2br($ocupacao); @endphp</p> 
             <p style="padding-left:10px;">
                 <a href="{{route('login')}}">Clique aqui para gerenciar as reservas! </a>
             </p>    

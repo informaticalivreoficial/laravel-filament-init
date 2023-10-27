@@ -254,7 +254,7 @@ class SendEmailController extends Controller
             $userCreate = User::create($user);
             $userCreate->save();
         }        
-
+        
         $reserva = [
             'cliente' => (!$getUser ? $userCreate->id : $getUser->id),
             'apartamento' => $apartamento->id,
@@ -263,11 +263,11 @@ class SendEmailController extends Controller
             'adultos' => $request->num_adultos,
             'criancas_0_5' => $request->num_cri_0_5,
             'codigo' => $data['codigo'],
-            'checkin' => Carbon::parse($request->checkin)->format('d/m/Y'),
-            'checkout' => Carbon::parse($request->checkout)->format('d/m/Y'),
-            'notasadicionais' => $data['ocupacao']
+            'checkin' => Carbon::createFromFormat('d/m/Y', $request->checkin)->format('d/m/Y'),
+            'checkout' => Carbon::createFromFormat('d/m/Y', $request->checkout)->format('d/m/Y'),
+            //'notasadicionais' => $data['ocupacao']
         ];
-                
+        
         $reservaCreate = Reservas::create($reserva);
         $reservaCreate->save();
 
