@@ -164,6 +164,52 @@
         </section>
     @endif
 
+    @if (!empty($galerias) && $galerias->count() > 0)
+        <section class="gallery-area pt-90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-title text-center">
+                            <h3>Galerias</h3>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-container">            
+                <div class="gallery-filter">
+                    <button data-filter="*" class="active"> Todas</button>
+                    @foreach($galerias as $key => $galHome)                    
+                    <button data-filter=".{{$galHome->id}}">{{$galHome->titulo}}</button>
+                    @endforeach
+                </div>
+                <div class="gallery gallery-masonry">
+                    @if ($galHome->images()->get()->count() > 0)
+                        @foreach ($galHome->images()->get() as $item)
+                            <div class="gallery-item {{$item->galeria}}">
+                                <div class="thumb">
+                                    <img width="370" height="284" src="{{ $item->url_image }}" alt=""/>
+                                </div>
+                                <div class="gallery-hover">
+                                    <div class="gallery-icon">
+                                        <a href="">
+                                            <span class="p-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/link.png')}}"/></span>
+                                            <span class="s-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/link-hover.png')}}"/></span>
+                                        </a>
+                                        <a class="image-popup" href="{{ $item->url_image }}">
+                                            <span class="p-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/search.png')}}"/></span>
+                                            <span class="s-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/search-hover.png')}}"/></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif                
+                </div>
+            </div>
+        </section>
+    @endif
+
     @if (!empty($artigos) && $artigos->count() > 0)
         <section class="blog-area" style="margin-top: 60px;margin-bottom: 40px;">
             <div class="container">
