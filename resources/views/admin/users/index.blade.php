@@ -1,16 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Gerenciar Alunos')
+@section('title', 'Gerenciar Clientes')
 
 @section('content_header')
 <div class="row mb-2">
     <div class="col-sm-6">
-        <h1><i class="fas fa-search mr-2"></i> Alunos</h1>
+        <h1><i class="fas fa-search mr-2"></i> Clientes</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">                    
             <li class="breadcrumb-item"><a href="{{route('home')}}">Painel de Controle</a></li>
-            <li class="breadcrumb-item active">Alunos</li>
+            <li class="breadcrumb-item active">Clientes</li>
         </ol>
     </div>
 </div>
@@ -58,9 +58,8 @@
                         <tr>
                             <th>Foto</th>
                             <th>Nome</th>
-                            <th>Plano</th>
-                            <th>Horário</th>
-                            <th>Situação</th>
+                            <th>CPF</th>
+                            <th>Perfil</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -82,13 +81,12 @@
                             @endphp
                             <td class="text-center">
                                 <a href="{{url($cover)}}" data-title="{{$user->name}}" data-toggle="lightbox">
-                                    <img style="max-height:55px !important;min-width:50px !important;min-height:50px !important;" alt="{{$user->name}}" class="table-avatar" src="{{url($cover)}}">
+                                    <img alt="{{$user->name}}" class="table-avatar" src="{{url($cover)}}">
                                 </a>
                             </td>
                             <td>{{$user->name}}</td>
-                            <td>{!!($user->plano ? $user->getPlano->name : '<a href='.route('pedidos.create').'>Cadastre um Pedido</a>')!!}</td>
-                            <td>{!!($user->plano ? \Carbon\Carbon::parse($user->getPlano->horario)->format('H:i') : '<a href='.route('pedidos.create').'>Cadastre um Pedido</a>')!!}</td>
-                            <td>{{$user->getFuncao()}}</td>
+                            <td>{{$user->cpf}}</td>
+                            <td>{{$user->funcao()}}</td>
                             <td>
                                 <input type="checkbox" data-onstyle="success" data-offstyle="warning" data-size="mini" class="toggle-class" data-id="{{ $user->id }}" data-toggle="toggle" data-style="slow" data-on="<i class='fas fa-check'></i>" data-off="<i style='color:#fff !important;' class='fas fa-exclamation-triangle'></i>" {{ $user->status == true ? 'checked' : ''}}>
                                 @if($user->whatsapp != '')

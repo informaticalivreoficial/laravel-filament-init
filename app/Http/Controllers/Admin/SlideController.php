@@ -119,8 +119,7 @@ class SlideController extends Controller
         $slide = Slide::where('id', $request->slide_id)->first();  
         $slideR = $slide->titulo;
         if(!empty($slide)){
-            Storage::delete($slide->imagem);
-            //Cropper::flush($slide->imagem);
+            !is_null($slide->imagem) && Storage::delete($slide->imagem);
             $slide->delete();
         }
         return redirect()->route('slides.index')->with(['color' => 'success', 'message' => 'O slide '.$slideR.' foi removido com sucesso!']);

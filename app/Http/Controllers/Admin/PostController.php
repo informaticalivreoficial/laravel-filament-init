@@ -269,7 +269,7 @@ class PostController extends Controller
 
         if(!empty($postdelete)){
             if(!empty($imageDelete)){
-                Storage::delete($imageDelete->path);
+                !is_null($imageDelete->path) && Storage::delete($imageDelete->path);
                 $imageDelete->delete();
                 Storage::deleteDirectory($secao.'/'.$postdelete->id);
                 $postdelete->delete();

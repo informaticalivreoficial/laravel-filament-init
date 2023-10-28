@@ -237,13 +237,6 @@
                 $('.div_empresa').css("display", "block"); 
             }       
         }); 
-        
-        $('.datepicker-here').datepicker({
-            autoClose: true,            
-            minDate: new Date(),
-            position: "top right", //'right center', 'right bottom', 'right top', 'top center', 'bottom center'
-            
-        });
              
     });
 

@@ -133,8 +133,7 @@ class CatPostController extends Controller
         if(!empty($categoria)){
             if(!empty($post) && !empty($postgb)){
                 $postgb = PostGb::where('post', $post->id)->first();
-                Storage::delete($postgb->path);
-                //Cropper::flush($postgb->path);
+                !is_null($postgb->path) && Storage::delete($postgb->path);
                 $postgb->delete();
                 Storage::deleteDirectory($secao.'/'.$post->id);
                 $categoria->delete();

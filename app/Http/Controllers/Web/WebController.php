@@ -14,6 +14,7 @@ use App\Models\{
     Post,
     CatPost,
     Galeria,
+    GaleriaGb,
     Newsletter,
     Slide,
     User
@@ -41,6 +42,7 @@ class WebController extends Controller
                     ->inRandomOrder()
                     ->limit(4)
                     ->get();
+        $pagina = Post::postson()->inRandomOrder()->limit(1)->get();
         $artigos = Post::orderBy('created_at', 'DESC')->where('tipo', 'artigo')
                     ->postson()
                     ->limit(6)
@@ -50,6 +52,7 @@ class WebController extends Controller
                     ->where('expira', '>=', Carbon::now())
                     ->get();   
         $galerias = Galeria::orderBy('created_at', 'DESC')->available()->limit(3)->get();
+        $imagens = GaleriaGb::orderBy('created_at', 'DESC')->get();
         
         $head = $this->seo->render($this->configService->getConfig()->nomedosite ?? 'Informática Livre',
             $this->configService->getConfig()->descricao ?? 'Informática Livre desenvolvimento de sistemas web desde 2005',
@@ -63,7 +66,9 @@ class WebController extends Controller
             'apartamentos' => $apartamentos,
             'artigos' => $artigos,
             'acomodacoes' => $acomodacoes,
-            'galerias' => $galerias
+            'galerias' => $galerias,
+            'imagens' => $imagens,
+            'pagina' => $pagina
 		]);
     }
 

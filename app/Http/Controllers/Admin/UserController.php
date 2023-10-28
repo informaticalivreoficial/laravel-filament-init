@@ -157,7 +157,7 @@ class UserController extends Controller
             $perfil = ($user->admin == '1' && $user->client == '1' ? 'Administrador e Cliente' :
                       ($user->admin == '1' && $user->client == '0' ? 'Administrador' :
                       ($user->admin == '0' && $user->client == '1' ? 'Cliente' : 'Cliente')));
-            Storage::delete($user->avatar);
+            !is_null($user->avatar) && Storage::delete($user->avatar);
             $user->delete();
         }
         if($user->admin == '1' || $user->Editor == '1'){

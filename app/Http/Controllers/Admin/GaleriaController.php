@@ -162,7 +162,7 @@ class GaleriaController extends Controller
 
         if(!empty($postdelete)){
             if(!empty($imageDelete)){
-                Storage::delete($imageDelete->path);
+                !is_null($imageDelete->path) && Storage::delete($imageDelete->path);
                 $imageDelete->delete();
                 Storage::deleteDirectory('galerias/'.$postdelete->id);
                 $postdelete->delete();

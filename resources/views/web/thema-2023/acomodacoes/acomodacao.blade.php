@@ -73,10 +73,10 @@
                         <div class="form-container fix">
                             <div class="box-select">
                                 <div class="select date">
-                                    <input class="j_data" type="text" name="checkini" autocomplete="off" placeholder="Checkin" />
+                                    <input class="datepicker-here" data-language='pt-BR' type="text" name="checkini" autocomplete="off" placeholder="Checkin" />
                                 </div>
                                 <div class="select date">
-                                    <input type="text" class="j_data" name="checkouti" autocomplete="off" placeholder="Checkout" />
+                                    <input type="text" class="datepicker-here" data-language='pt-BR' name="checkouti" autocomplete="off" placeholder="Checkout" />
                                 </div>
                                 <div class="select arrow">
                                     <select name="adultos" id="adu" title="Adultos">
@@ -141,29 +141,20 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{url('frontend/'.$configuracoes->template.'/assets/css/bootstrap-datepicker3.min.css')}}"/>
+    <link href="{{url(asset('backend/plugins/airdatepicker/css/datepicker.min.css'))}}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('js')
-    <script src="{{url('frontend/'.$configuracoes->template.'/assets/js/datepicker/bootstrap-datepicker.js')}}"></script>
+    <script src="{{url(asset('backend/plugins/airdatepicker/js/datepicker.min.js'))}}"></script>
+    <script src="{{url(asset('backend/plugins/airdatepicker/js/i18n/datepicker.pt-BR.js'))}}"></script>
     <script>
-        $(function () {    
-            // CHECKIN
-            $( ".j_data" ).datepicker({
-            //beforeShowDay: DisableMonday,// chama função data 
-            //beforeShowDay: unavailable,// chama função dia da semana
-            dateFormat: 'dd/mm/yy',
-            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-            dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-            nextText: 'Próximo',
-            prevText: 'Anterior',
-            showOn: 'focus',    
-            buttonImageOnly: true,
-            //buttonImage: '<?php //echo PATCH;?>/img/data.png'
-            });    
+        $(function () { 
+            $('.datepicker-here').datepicker({
+                autoClose: true,            
+                minDate: new Date(),
+                position: "top right", //'right center', 'right bottom', 'right top', 'top center', 'bottom center'
+                
+            });
         });
     </script>
 @endsection

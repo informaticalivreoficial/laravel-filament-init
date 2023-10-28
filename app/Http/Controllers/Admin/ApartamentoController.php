@@ -185,7 +185,7 @@ class ApartamentoController extends Controller
         if(!empty($apartamento)){
             if(!empty($imageDelete)){
                 foreach($imageDelete as $imgGB){
-                    Storage::delete($imgGB->path);
+                    !is_null($imgGB->path) && Storage::delete($imgGB->path);
                     $imgGB->delete();
                 }                
                 Storage::deleteDirectory('apartamentos/'. $request->apartamento_id);

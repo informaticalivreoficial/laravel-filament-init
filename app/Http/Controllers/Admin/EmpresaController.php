@@ -5,12 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Empresa as EmpresaRequest;
 use Illuminate\Support\Facades\Storage;
-use App\Support\Cropper;
 use Illuminate\Support\Str;
-use App\Models\Cidades;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
-use App\Models\Estados;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -27,13 +24,9 @@ class EmpresaController extends Controller
     
     public function create()
     {
-        $estados = Estados::orderBy('estado_nome', 'ASC')->get();
-        $cidades = Cidades::orderBy('cidade_nome', 'ASC')->get();
         $users = User::orderBy('name')->get();
         return view('admin.empresas.create', [
-            'users' => $users,
-            'estados' => $estados,
-            'cidades' => $cidades
+            'users' => $users
         ]);
     }
     
@@ -54,25 +47,15 @@ class EmpresaController extends Controller
     
     public function edit($id)
     {
-        $estados = Estados::orderBy('estado_nome', 'ASC')->get();
-        $cidades = Cidades::orderBy('cidade_nome', 'ASC')->get();
         $empresa = Empresa::where('id', $id)->first();
         $users = User::orderBy('name')->get();
 
         return view('admin.empresas.edit', [
             'empresa' => $empresa,
-            'users' => $users,
-            'estados' => $estados,
-            'cidades' => $cidades
+            'users' => $users
         ]);
     }
 
-    public function fetchCity(Request $request)
-    {
-        $data['cidades'] = Cidades::where("estado_id",$request->estado_id)->get(["cidade_nome", "cidade_id"]);
-        return response()->json($data);
-    }
-   
     public function update(EmpresaRequest $request, $id)
     {
         $empresa = Empresa::where('id', $id)->first();
@@ -115,8 +98,7 @@ class EmpresaController extends Controller
     {
         $empresa = Empresa::where('id', $request->empresa_id)->first();
         if(!empty($empresa)){
-            Storage::delete($empresa->logomarca);
-            //Cropper::flush($empresa->logomarca);
+            !is_null($empresa->logomarca) && Storage::delete($empresa->logomarca);
             $empresa->delete();
         }
         return Redirect::route('empresas.index')->with([

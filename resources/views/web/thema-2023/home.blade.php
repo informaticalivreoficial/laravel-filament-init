@@ -42,14 +42,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="" method="post" class="search-form">
+                    <form action="{{route('web.reservar')}}" method="post" class="search-form">
+                        @csrf
                         <div class="form-container fix">
                             <div class="box-select">
                                 <div class="select date">
-                                    <input type="text" id="j_data" name="checkini" autocomplete="off" placeholder="Checkin" />
+                                    <input type="text" class="datepicker-here" data-language='pt-BR' name="checkini" autocomplete="off" placeholder="Checkin" />
                                 </div>
                                 <div class="select date">
-                                    <input type="text" id="j_data1" name="checkouti" autocomplete="off" placeholder="Checkout" />
+                                    <input type="text" class="datepicker-here" data-language='pt-BR' name="checkouti" autocomplete="off" placeholder="Checkout" />
                                 </div>
                                 <div class="select arrow">
                                     <select name="apart_id">
@@ -68,71 +69,49 @@
                 </div>
             </div>
             
-           <div class="row">
-                <div class="col-md-7">
-                    <div class="video-wrapper mt-90">
-                        <div class="video-overlay">
-                            <img src="" alt=""/>                                
-                        </div>                            
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="about-text">
-                        <div class="section-title">
-                            <h3>titulo</h3>
-                            content 750
+            @if (!empty($pagina) && $pagina->count() > 0)
+                <div class="row">
+                    @foreach ($pagina as $item)
+                        <div class="col-md-7">
+                            <div class="video-wrapper mt-90">
+                                <a href="{{route('web.pagina', [ 'slug' => $item->slug])}}">
+                                    <div class="video-overlay">                                        
+                                        <img height="400" src="{{$item->cover()}}" alt="{{$item->titulo}}"/>                                                                    
+                                    </div>  
+                                </a>                            
+                            </div>
                         </div>
-                        <div class="about-links">
-                            <a href="#"><i class="zmdi zmdi-facebook"></i></a>
-                            <a href="#"><i class="zmdi zmdi-instagram"></i></a>
-                            <a href="#"><i class="zmdi zmdi-rss"></i></a>
-                            <a href="#"><i class="zmdi zmdi-twitter"></i></a>
-                            <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
+                        <div class="col-md-5">
+                            <div class="about-text">
+                                <div class="section-title">
+                                    <h3>{{$item->titulo}}</h3>
+                                    {!!\App\Helpers\Renato::Words($item->content, 45)!!}
+                                </div>
+                                <div class="about-links">
+                                    @if ($configuracoes->facebook)
+                                        <a target="_blank" href="{{$configuracoes->facebook}}" title="Facebook"><i class="zmdi zmdi-facebook"></i></a>
+                                    @endif
+                                    @if ($configuracoes->instagram)
+                                        <a target="_blank" href="{{$configuracoes->instagram}}" title="Instagram"><i class="zmdi zmdi-instagram"></i></a>
+                                    @endif
+                                    @if ($configuracoes->twitter)
+                                        <a target="_blank" href="{{$configuracoes->twitter}}" title="Twitter"><i class="zmdi zmdi-twitter"></i></a>
+                                    @endif
+                                    @if ($configuracoes->youtube)
+                                        <a target="_blank" href="{{$configuracoes->youtube}}" title="Youtube"><i class="zmdi zmdi-youtube"></i></a>
+                                    @endif
+                                    @if ($configuracoes->linkedin)
+                                        <a target="_blank" href="{{$configuracoes->linkedin}}" title="Linkedin"><i class="zmdi zmdi-linkedin"></i></a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-            </div>
+            @endif
                           
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @if (!empty($apartamentos) && $apartamentos->count() > 0)
         <section class="room-area pt-90">
@@ -180,31 +159,33 @@
                 <div class="gallery-filter">
                     <button data-filter="*" class="active"> Todas</button>
                     @foreach($galerias as $key => $galHome)                    
-                    <button data-filter=".{{$galHome->id}}">{{$galHome->titulo}}</button>
+                        <button data-filter=".{{$galHome->id}}">{{$galHome->titulo}}</button>
                     @endforeach
                 </div>
-                <div class="gallery gallery-masonry">
-                    @if ($galHome->images()->get()->count() > 0)
-                        @foreach ($galHome->images()->get() as $item)
-                            <div class="gallery-item {{$item->galeria}}">
-                                <div class="thumb">
-                                    <img width="370" height="284" src="{{ $item->url_image }}" alt=""/>
-                                </div>
-                                <div class="gallery-hover">
-                                    <div class="gallery-icon">
-                                        <a href="">
-                                            <span class="p-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/link.png')}}"/></span>
-                                            <span class="s-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/link-hover.png')}}"/></span>
-                                        </a>
-                                        <a class="image-popup" href="{{ $item->url_image }}">
-                                            <span class="p-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/search.png')}}"/></span>
-                                            <span class="s-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/search-hover.png')}}"/></span>
-                                        </a>
+                <div class="gallery gallery-masonry">    
+                    @if (!empty($imagens) && $imagens->count() > 0)
+                        @foreach ($imagens as  $key => $item)                                    
+                            @if ($key <= 11)
+                                <div class="gallery-item {{$item->galeria}}">
+                                    <div class="thumb">
+                                        <img width="370" height="284" src="{{ $item->url_image }}" alt="{{$item->galery->titulo}}"/>
+                                    </div>
+                                    <div class="gallery-hover">
+                                        <div class="gallery-icon">
+                                            <a href="{{route('web.galeria', ['slug' => $item->galery->slug])}}">
+                                                <span class="p-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/link.png')}}"/></span>
+                                                <span class="s-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/link-hover.png')}}"/></span>
+                                            </a>
+                                            <a class="image-popup" href="{{ $item->url_image }}">
+                                                <span class="p-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/search.png')}}"/></span>
+                                                <span class="s-img"><img src="{{url('frontend/'.$configuracoes->template.'/assets/images/icon/search-hover.png')}}"/></span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif                                               
                         @endforeach
-                    @endif                
+                    @endif                                        
                 </div>
             </div>
         </section>
@@ -280,7 +261,13 @@
 
 @endsection
 
+@section('css')
+    <link href="{{url(asset('backend/plugins/airdatepicker/css/datepicker.min.css'))}}" rel="stylesheet" type="text/css">
+@endsection
+
 @section('js')
+    <script src="{{url(asset('backend/plugins/airdatepicker/js/datepicker.min.js'))}}"></script>
+    <script src="{{url(asset('backend/plugins/airdatepicker/js/i18n/datepicker.pt-BR.js'))}}"></script>
     <script>
         $(function () {
 
@@ -321,6 +308,13 @@
                 });
 
                 return false;
+            });
+
+            $('.datepicker-here').datepicker({
+                autoClose: true,            
+                minDate: new Date(),
+                position: "top right", //'right center', 'right bottom', 'right top', 'top center', 'bottom center'
+                
             });
 
         });

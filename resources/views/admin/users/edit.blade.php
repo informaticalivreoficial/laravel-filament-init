@@ -5,13 +5,13 @@
 @section('content_header')
 <div class="row mb-2">
     <div class="col-sm-6">
-        <h1>Editar {{($user->client == 1 ? 'Aluno' : 'Usuário')}}</h1>
+        <h1>Editar {{($user->client == 1 ? 'Cliente' : 'Usuário')}}</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Painel de Controle</a></li>
-            <li class="breadcrumb-item"><a href="{{route('users.index')}}">{{($user->client == 1 ? 'Alunos' : 'Usuários')}}</a></li>
-            <li class="breadcrumb-item active">Editar {{($user->client == 1 ? 'Aluno' : 'Usuário')}}</li>
+            <li class="breadcrumb-item"><a href="{{route('users.index')}}">{{($user->client == 1 ? 'Clientes' : 'Usuários')}}</a></li>
+            <li class="breadcrumb-item active">Editar {{($user->client == 1 ? 'Cliente' : 'Usuário')}}</li>
         </ol>
     </div>
 </div>

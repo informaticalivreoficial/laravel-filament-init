@@ -30,4 +30,9 @@ class GaleriaGb extends Model
     {
         return Storage::url($this->path);
     }
+
+    public function galery()
+    {
+        return $this->belongsTo(Galeria::class, 'galeria', 'id');
+    }
 }
