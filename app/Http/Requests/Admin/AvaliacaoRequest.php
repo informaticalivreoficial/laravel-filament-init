@@ -28,7 +28,7 @@ class AvaliacaoRequest extends FormRequest
         
         return [
             'name' => 'required|min:3|max:191',
-            'email' => ['required', 'string', 'email', 'min:3', 'max:191', "unique:avaliacoes,email,{$id},id"],
+            //'email' => ['required', 'string', 'email', 'min:3', 'max:191', "unique:avaliacoes,email,{$id},id"],
         ];
     }
 }

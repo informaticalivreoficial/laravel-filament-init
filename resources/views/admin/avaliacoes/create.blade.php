@@ -71,27 +71,13 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-2"> 
                                         <div class="form-group">
                                             <label class="labelforms text-muted"><b>Estado:</b></label>
-                                            <select id="state-dd" class="form-control" name="uf">
-                                                @if(!empty($estados))
-                                                    @foreach($estados as $estado)
-                                                    <option value="{{$estado->estado_id}}" {{ (old('uf') == $estado->estado_id ? 'selected' : '') }}>{{$estado->estado_nome}}</option>
-                                                    @endforeach                                                                        
-                                                @endif
-                                            </select>
+                                            <input type="text" class="form-control" name="uf" value="{{old('uf')}}">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-lg-4 mb-2"> 
                                         <div class="form-group">
                                             <label class="labelforms text-muted"><b>Cidade:</b></label>
-                                            <select id="city-dd" class="form-control" name="cidade">
-                                                @if(!empty($cidades))
-                                                    <option value="">Selecione o Estado</option>
-                                                    @foreach($cidades as $cidade)
-                                                        <option value="{{$cidade->cidade_id}}" 
-                                                                {{ (old('cidade') == $cidade->cidade_id ? 'selected' : '') }}>{{$cidade->cidade_nome}}</option>                                                                   
-                                                    @endforeach                                                                        
-                                                @endif
-                                            </select>
+                                            <input type="text" class="form-control" name="cidade" value="{{old('cidade')}}">
                                         </div>
                                     </div>
                                     <div class="col-12 mb-2">   
@@ -116,39 +102,4 @@
                                 
         </form>
 
-@endsection
-
-@section('js')
-<script>
-    $(function () { 
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        
-        $('#state-dd').on('change', function () {
-            var idState = this.value;
-            $("#city-dd").html('');
-            $.ajax({
-                url: "{{route('avaliacoes.fetchCity')}}",
-                type: "POST",
-                data: {
-                    estado_id: idState,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success: function (res) {
-                    $('#city-dd').html('<option value="">Selecione a cidade</option>');
-                    $.each(res.cidades, function (key, value) {
-                        $("#city-dd").append('<option value="' + value
-                            .cidade_id + '">' + value.cidade_nome + '</option>');
-                    });
-                }
-            });
-        });
-        
-    });
-</script>
 @endsection

@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AvaliacaoRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Avaliacoes;
-use App\Models\Cidades;
-use App\Models\Estados;
 use Illuminate\Http\Request;
 
 class AvaliacaoController extends Controller
@@ -22,13 +20,7 @@ class AvaliacaoController extends Controller
 
     public function create()
     {
-        $estados = Estados::orderBy('estado_nome', 'ASC')->get();
-        $cidades = Cidades::orderBy('cidade_nome', 'ASC')->get();
-
-        return view('admin.avaliacoes.create',[
-            'estados' => $estados,
-            'cidades' => $cidades
-        ]);
+        return view('admin.avaliacoes.create');
     }
 
     public function store(AvaliacaoRequest $request)
@@ -44,14 +36,10 @@ class AvaliacaoController extends Controller
 
     public function edit($id)
     {
-        $avaliacao = Avaliacoes::where('id', $id)->first();    
-        $estados = Estados::orderBy('estado_nome', 'ASC')->get();
-        $cidades = Cidades::orderBy('cidade_nome', 'ASC')->get(); 
+        $avaliacao = Avaliacoes::where('id', $id)->first();  
         
         return view('admin.avaliacoes.edit', [
-            'avaliacao' => $avaliacao,
-            'estados' => $estados,
-            'cidades' => $cidades
+            'avaliacao' => $avaliacao
         ]);
     }
 
@@ -71,12 +59,6 @@ class AvaliacaoController extends Controller
             'color' => 'success', 
             'message' => 'Avaliação atualizada com sucesso!'
         ]);
-    }
-
-    public function fetchCity(Request $request)
-    {
-        $data['cidades'] = Cidades::where("estado_id",$request->estado_id)->get(["cidade_nome", "cidade_id"]);
-        return response()->json($data);
     }
 
     public function avaliacoesSetStatus(Request $request)
