@@ -65,7 +65,7 @@ return new class extends Migration
             $table->boolean('editor')->nullable();            
 
             $table->integer('status')->default('0');
-            $table->text('information')->nullable();
+            $table->longText('information')->nullable();
 
             $table->timestamps();
         });
