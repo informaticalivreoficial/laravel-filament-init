@@ -73,13 +73,14 @@ class User extends Authenticatable
         }
     }
 
-    public function getUrlAvatarAttribute()
-    {
-        if (!empty($this->avatar)) {
-            return Storage::url($this->avatar);
-        }
-        return '';
-    }
+    // public function getAvatarAttribute()
+    // {
+    //     return $this->attributes['avatar'] ? Storage::url($this->attributes['avatar']) : url(asset('backend/assets/images/image.jpg'));
+    //     // if(!empty($this->avatar) || !Storage::disk()->exists($this->avatar)) {
+    //     //     return url(asset('backend/assets/images/image.jpg'));
+    //     // } 
+    //     // return Storage::url($this->avatar);
+    // }
 
     public function setCellPhoneAttribute($value)
     {
@@ -96,6 +97,11 @@ class User extends Authenticatable
             substr($value, 0, 2) . ') ' .
             substr($value, 2, 5) . '-' .
             substr($value, 7, 4) ;
+    }
+
+    public function setBirthdayAttribute($value)
+    {
+        $this->attributes['birthday'] = (!empty($value) ? $this->convertStringToDate($value) : null);
     }
 
     public function setAdminAttribute($value)

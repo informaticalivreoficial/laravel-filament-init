@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,18 +23,23 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    //protected static ?string $modelLabel = 'Usuários';
 
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                FileUpload::make('avatar')->disk('s3')->directory('users')
-                        ->image()
-                        ->imageEditor(),
+                FileUpload::make('avatar')
+                        ->disk('s3')
+                        ->visibility('private')
+                        ->directory(env('AWS_PASTA') . 'usuarios')
+                        ->image()->imageEditor(),
                 TextInput::make('name')->label('Nome Completo')->required()->maxLength(255),
                 TextInput::make('cpf')->label('CPF')->required()->maxLength(255),
                 TextInput::make('rg')->label('RG')->required()->maxLength(255),
+                DatePicker::make('birthday')->format('d/m/Y'),
                 TextInput::make('email')->email()->required()->maxLength(255),
                 TextInput::make('password')->password()->visibleOn('create')
             ]);
@@ -43,7 +49,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('avatar')->circular()->disk('s3'),
+                ImageColumn::make('avatar')->circular(),
                 TextColumn::make('name')->label('Nome')->searchable()->sortable(),
                 TextColumn::make('email')->label('Email')->searchable(),                
                 TextColumn::make('created_at')->label('Data')->dateTime('d/m/Y')->sortable(),
