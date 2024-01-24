@@ -6,7 +6,9 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Section;
@@ -43,12 +45,32 @@ class UserResource extends Resource
                         ->visibility('private')
                         ->directory(env('AWS_PASTA') . 'usuarios')
                         ->image()->imageEditor(),
+                        Fieldset::make('Permissões')
+                        ->schema([
+                            Checkbox::make('editor')->label('Editor')->inline(),
+                            Checkbox::make('admin')->label('Administrador')->inline(),
+                            Checkbox::make('client')->label('Cliente')->inline(),
+                            Checkbox::make('superadmin')->label('Super Admin')->inline(),
+                        ])->columns(2)
+                        
+                    // CheckboxList::make('Permissões')->reactive()
+                    //     ->options([
+                    //         'editor' => 'Editor',
+                    //         'admin' => 'Administrador',
+                    //         'client' => 'Cliente',
+                    //         'superadmin' => 'Super Admin',
+                    //     ])->columns(2)->gridDirection('row'),
                 ])->columnSpan(1),
 
                 Section::make()
                 ->schema([
-                    TextInput::make('name')->label('Nome Completo')->required()->maxLength(255),
-                    DatePicker::make('birthday')->label('Data de Nascimento')->format('d/m/Y'),
+                    TextInput::make('name')
+                        ->label('Nome Completo')
+                        ->required()
+                        ->maxLength(255),
+                    DatePicker::make('birthday')
+                        ->label('Data de Nascimento')
+                        ->format('d/m/Y'),
                     Select::make('gender')->label('Genero')
                             ->options([
                                 'masculino' => 'Masculino',
@@ -62,13 +84,30 @@ class UserResource extends Resource
                                 'divorciado' => 'Divorciado',
                                 'viuvo' => 'Viúvo(a)',
                             ])->placeholder('Selecione'),
-                    ])->columnSpan(2)->columns(2),
+                    TextInput::make('cpf')->mask('999.999.999-99')->label('CPF')->required()->maxLength(255),
+                    TextInput::make('rg')->mask('99.999.999-9')->label('RG')->maxLength(255),
+                    TextInput::make('rg_expedition')->label('Órgão Expedidor')->maxLength(255),
+                    TextInput::make('naturalness')->label('Naturalidade')->maxLength(255),
+                ])->columnSpan(2)->columns(2),
+                                
+                Section::make('Endereço')
+                ->schema([
+                    TextInput::make('postcode')
+                    ->id('cep')
+                    ->mask('99.999-999')
+                    ->label('CEP'),
+                    TextInput::make('state')->label('Estado')->maxLength(255),
+                    TextInput::make('city')->label('Cidade')->maxLength(255),
+                    TextInput::make('street')->label('Rua')->maxLength(255),
+                    TextInput::make('neighborhood')->label('Bairro')->maxLength(255),
+                    TextInput::make('complement')->label('Complemento')->maxLength(255),
+                ])->collapsible()->columns(3),
 
                 Section::make('Contato')
                 ->schema([
-                    TextInput::make('phone')->label('Residencial')->maxLength(255),
+                    TextInput::make('phone')->mask('(99) 9999-9999')->label('Residencial')->maxLength(255),
                     TextInput::make('cell_phone')->mask('(99) 99999-9999')->label('Celular')->maxLength(255)->required(),
-                    TextInput::make('whatsapp')->label('WhatsApp')->maxLength(255),
+                    TextInput::make('whatsapp')->mask('(99) 99999-9999')->label('WhatsApp')->maxLength(255),
                     TextInput::make('additional_email')->label('E-mail Alternativo')->maxLength(255),
                     TextInput::make('skype')->label('Skype')->maxLength(255),
                     TextInput::make('telegram')->label('Telegram')->maxLength(255),
@@ -90,10 +129,7 @@ class UserResource extends Resource
                 ])->collapsible()->columnSpan(1),
                 
                 
-                TextInput::make('cpf')->label('CPF')->required()->maxLength(255),
-                TextInput::make('rg')->label('RG')->required()->maxLength(255),
-                TextInput::make('rg_expedition')->label('Órgão Expedidor')->maxLength(255),
-                TextInput::make('naturalness')->label('Naturalidade')->maxLength(255),
+                
                 
                 
                 

@@ -52,6 +52,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'client' => 'boolean',
+        'admin' => 'boolean',
+        'superadmin' => 'boolean',
     ];
 
     /**
@@ -104,25 +107,25 @@ class User extends Authenticatable
         $this->attributes['birthday'] = (!empty($value) ? $this->convertStringToDate($value) : null);
     }
 
-    public function setAdminAttribute($value)
-    {
-        $this->attributes['admin'] = ($value === true || $value === 'on' ? 1 : 0);
-    }
+    // public function setAdminAttribute($value)
+    // {
+    //     $this->attributes['admin'] = ($value === true || $value === 'on' ? 1 : 0);
+    // }
 
-    public function setEditorAttribute($value)
-    {
-        $this->attributes['editor'] = ($value === true || $value === 'on' ? 1 : 0);
-    }
+    // public function setEditorAttribute($value)
+    // {
+    //     $this->attributes['editor'] = ($value === true || $value === 'on' ? 1 : 0);
+    // }
 
-    public function setClientAttribute($value)
-    {
-        $this->attributes['client'] = ($value === true || $value === 'on' ? 1 : 0);
-    }
+    // public function setClientAttribute($value)
+    // {
+    //     $this->attributes['client'] = ($value === true || $value === 'on' ? 1 : 0);
+    // }
     
-    public function setSuperAdminAttribute($value)
-    {
-        $this->attributes['superadmin'] = ($value === true || $value === 'on' ? 1 : 0);
-    }
+    // public function setSuperAdminAttribute($value)
+    // {
+    //     $this->attributes['superadmin'] = ($value === true || $value === 'on' ? 1 : 0);
+    // }
 
     private function convertStringToDouble(?string $param)
     {

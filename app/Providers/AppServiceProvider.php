@@ -30,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         User::observe(UserObserver::class);
+
+        
+
         //URL::forceScheme('https');
         // Schema::defaultStringLength(191);
         // Blade::aliasComponent('admin.components.message', 'message');
