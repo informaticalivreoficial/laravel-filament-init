@@ -30,7 +30,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    //protected static ?string $modelLabel = 'Usuários';
+    protected static ?string $navigationLabel = 'Usuários';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';   
     
@@ -83,6 +83,13 @@ class UserResource extends Resource
                     TextInput::make('rg_expedition')->label('Órgão Expedidor')->maxLength(255),
                     TextInput::make('naturalness')->label('Naturalidade')->maxLength(255),
                 ])->columnSpan(2)->columns(2),
+
+                Section::make('Redes Sociais')
+                ->schema([
+                    TextInput::make('facebook')->label('Facebook')->maxLength(255),
+                    TextInput::make('twitter')->label('Twitter')->maxLength(255),
+                    TextInput::make('instagram')->label('Instagram')->maxLength(255),
+                ])->columns(3),
                                 
                 Section::make('Endereço')
                 ->schema([
@@ -178,4 +185,15 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Usuário');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Usuários');
+    }
+
 }
