@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Forms\Components\PostalCode;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
@@ -92,10 +93,7 @@ class UserResource extends Resource
                                 
                 Section::make('Endereço')
                 ->schema([
-                    TextInput::make('postcode')
-                    ->id('cep')
-                    ->mask('99.999-999')
-                    ->label('CEP'),
+                    PostalCode::make('postcode')->label('CEP')->viaCep(),
                     TextInput::make('state')->label('Estado')->maxLength(255),
                     TextInput::make('city')->label('Cidade')->maxLength(255),
                     TextInput::make('street')->label('Rua')->maxLength(255),
