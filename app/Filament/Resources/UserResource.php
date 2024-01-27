@@ -52,15 +52,8 @@ class UserResource extends Resource
                             Checkbox::make('admin')->label('Administrador')->inline(),
                             Checkbox::make('client')->label('Cliente')->inline(),
                             Checkbox::make('superadmin')->label('Super Admin')->inline(),
-                        ])->columns(2)
-                        
-                    // CheckboxList::make('Permissões')->reactive()
-                    //     ->options([
-                    //         'editor' => 'Editor',
-                    //         'admin' => 'Administrador',
-                    //         'client' => 'Cliente',
-                    //         'superadmin' => 'Super Admin',
-                    //     ])->columns(2)->gridDirection('row'),
+                        ])->columns(2)                        
+                    
                 ])->columnSpan(1),
 
                 Section::make()
@@ -93,7 +86,17 @@ class UserResource extends Resource
                                 
                 Section::make('Endereço')
                 ->schema([
-                    PostalCode::make('postcode')->label('CEP')->viaCep(),
+                    PostalCode::make('postcode')
+                            ->label('CEP')
+                            ->viaCep(
+                                setFields: [
+                                   'street' => 'logradouro', 
+                                   'neighborhood' => 'bairro', 
+                                   'state' => 'uf', 
+                                   'city' => 'localidade',
+                                   'complement' => 'complemento',
+                                ]
+                            ),
                     TextInput::make('state')->label('Estado')->maxLength(255),
                     TextInput::make('city')->label('Cidade')->maxLength(255),
                     TextInput::make('street')->label('Rua')->maxLength(255),
