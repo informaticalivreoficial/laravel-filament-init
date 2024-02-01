@@ -33,6 +33,8 @@ class UserResource extends Resource
     protected static ?string $navigationLabel = 'Usuários';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';   
+
+    protected static ?string $slug = 'usuarios';
     
     public static function form(Form $form): Form
     {
@@ -147,6 +149,7 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultPaginationPageOption(25)
             ->columns([
                 ImageColumn::make('avatar')->circular(),
                 TextColumn::make('name')->label('Nome')->searchable()->sortable(),
@@ -194,6 +197,13 @@ class UserResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('Usuários');
+    }
+
+    public static function getEloquentQuery() : Builder
+    {
+        return User::orderBy('created_at', 'DESC')
+                ->where('client', 1)
+                ->orderBy('status', 'ASC');
     }
 
 }
