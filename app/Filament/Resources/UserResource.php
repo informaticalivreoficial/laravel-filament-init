@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Forms\Components\PostalCode;
+use Filament\Tables\RecordActions\Link;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
@@ -184,6 +185,7 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
+            'time' => Pages\TimeResource::route('/time'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
